@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="shortcut icon" href="img/udn_title_icon.jpg">
+	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- <title>電視為什麼這麼難看？ 數據告訴你真相</title> -->
+	
+	<!-- for Facebook -->
+	<!-- <meta property="og:title" content="電視為什麼這麼難看？ 數據告訴你真相"/> 
+	<meta property="og:type" content="website"/>
+	<meta property="og:url" content="http://p.udn.com.tw/upf/newmedia/2015_data/20150729_tv_data/udn_tv_data/index.html"/>
+	<meta property="og:image" content="http://p.udn.com.tw/upf/newmedia/2015_data/20150729_tv_data/udn_tv_data/img/FB.jpg"/>
+	<meta property="og:site_name" content="聯合報系新媒體部"/> 
+	<meta property="og:description" content="電視轉來轉去，沒一台好看的！」這樣的抱怨每天出現在你我的生活中，為什麼電視節目這麼難看？你每個月繳的500元有線電視費花到哪去了？數據和動畫為你一一拆解。"/> -->
+	
+	<!-- for Google -->
+	<!-- <meta name="description" content="電視轉來轉去，沒一台好看的！」這樣的抱怨每天出現在你我的生活中，為什麼電視節目這麼難看？你每個月繳的500元有線電視費花到哪去了？數據和動畫為你一一拆解。" />
+	<meta name="author" content="聯合報系新媒體部" />
+	<meta name="copyright" content="聯合報系新媒體部" />
+	<meta name="application-name" content="電視為什麼這麼難看？ 數據告訴你真相" /> -->
+	
+	<!-- our google analytics -->
+	
+
+	<!-- udn google analytics -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	 
+	  ga('create', 'UA-19660006-1', 'auto');
+	  ga('send', 'pageview');
+	 
+	</script>
+
+	<!-- udn comScore Tag -->
+	<script>
+	var _comscore = _comscore || [];
+	_comscore.push({ c1: "2", c2: "7390954" });
+	(function() {
+	var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+	s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+	el.parentNode.insertBefore(s, el);
+	})();
+	</script>
+	<noscript>
+	<img src="http://b.scorecardresearch.com/p?c1=2&c2=7390954&cv=2.0&cj=1" />
+	</noscript>
+
+	<!-- udn Alexa Certify Javascript -->
+	<script type="text/javascript">
+	_atrk_opts = { atrk_acct:"aw0Di1a4ZP00aY", domain:"udn.com",dynamic: true};
+	(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+	</script>
+	<noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=aw0Di1a4ZP00aY" style="display:none" height="1" width="1" alt="" /></noscript>
+
+	
+  	<script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+  	<script type="text/javascript" src="js/bootstrap.js"></script>
+  	<script type="text/javascript" src="js/d3.js"></script>
+  	<script type="text/javascript" src="js/d3tip.js"></script>
+  	<script type="text/javascript" src="js/rent_index.js"></script>
+  	
+  	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  	<link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+	<div class = "container">
+		<div class = "sec-container">
+			<div class = "calculator-container fl-left" id = "rent-calculator">
+				<form class="form-horizontal" role="form">
+				  <!-- <div class="form-group">
+				    <label for="rent-square" class="col-sm-3 control-label">坪數</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="rent-square" placeholder="輸入坪數">
+				    </div>
+				  </div> -->
+				  <!-- <div class="form-group">
+				  	<div class="dropdown fl-left">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-city-rent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					    縣市
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu dropdown-city-rent" aria-labelledby="dropdownMenu-city-rent"> -->
+					    <!-- <li><a href="#">Action</a></li>
+					    <li><a href="#">Another action</a></li>
+					    <li><a href="#">Something else here</a></li>
+					    <li><a href="#">Separated link</a></li> -->
+					  <!-- </ul>
+					</div>
+					<div class="dropdown fl-left">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-dist-rent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					    地區
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu dropdown-dist-rent" aria-labelledby="dropdownMenu-dist-rent">
+					  	<li><a>請先選擇縣市</a></li> -->
+					    <!-- <li><a>Action</a></li>
+					    <li><a>Another action</a></li>
+					    <li><a href="#">Something else here</a></li>
+					    <li><a href="#">Separated link</a></li> -->
+					  <!-- </ul>
+					</div>
+
+				  </div> -->
+				  <div class="form-group">
+				    <label for="rent-money" class="col-sm-3 control-label">租金</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="rent-money" placeholder="輸入租金或選擇地區自動計算">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="rent-time" class="col-sm-3 control-label">居住時間</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="rent-time" placeholder="輸入居住時間">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="rent-deposit" class="col-sm-3 control-label">押金(月)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="rent-deposit" placeholder="輸入押金(月)">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="rent-inflat" class="col-sm-3 control-label">租金上漲率(%)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="rent-inflat" placeholder="輸入租金上漲率(%)">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="rent-agentfee" class="col-sm-3 control-label">仲介費(%)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="rent-agentfee" placeholder="輸入仲介費(%)">
+				    </div>
+				  </div>
+
+				  <!-- <div class="form-group">
+				    <label for="rent-investreturn" class="col-sm-3 control-label">投資報酬率(%)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="rent-investreturn" placeholder="輸入投資報酬率(%)">
+				    </div>
+				  </div> -->
+				 
+				  <div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10">
+				      <button class="btn btn-default calculate-btn" id = "cal-btn-rent">計算</button>
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-3">初始開銷</div>
+				    <div class="col-sm-6">
+				      <div id = "rent-initcost"></div>
+				    </div>
+				  </div>
+
+				  <!-- <div class="form-group">
+				    <div class="col-sm-3">初始開銷機會成本</div>
+				    <div class="col-sm-6">
+				      <div id = "rent-initcostoppo"></div>
+				    </div>
+				  </div> -->
+
+				  <div class="form-group">
+				    <div class="col-sm-3">累計租金</div>
+				    <div class="col-sm-6">
+				      <div id = "rent-totalmoney"></div>
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-3">機會成本</div>
+				    <div class="col-sm-6">
+				      <div id = "rent-oppotunitycost"></div>
+				    </div>
+				  </div>
+
+				  <!-- <div class="form-group">
+				    <div class="col-sm-3">租金機會成本</div>
+				    <div class="col-sm-6">
+				      <div id = "rent-totalmoneyoppo"></div>
+				    </div>
+				  </div> -->
+
+				  <div class="form-group">
+				    <div class="col-sm-3">押金退還</div>
+				    <div class="col-sm-6">
+				      <div id = "rent-depositback"></div>
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-3">總支出</div>
+				    <div class="col-sm-6">
+				      <div id = "rent-totalcost"></div>
+				    </div>
+				  </div>
+
+				</form>
+			</div>
+
+			<div class = "calculator-container fl-left" id = "buy-calculator">
+				<form class="form-horizontal" role="form">
+				  <div class="form-group">
+				    <label for="buy-square" class="col-sm-3 control-label">坪數</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-square" placeholder="輸入坪數">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				  	<div class="dropdown fl-left">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-city-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					    縣市
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu dropdown-city-buy" aria-labelledby="dropdownMenu-city-buy">
+					    <!-- <li><a href="#">Action</a></li>
+					    <li><a href="#">Another action</a></li>
+					    <li><a href="#">Something else here</a></li>
+					    <li><a href="#">Separated link</a></li> -->
+					  </ul>
+					</div>
+					<div class="dropdown fl-left">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-dist-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					    地區
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu dropdown-dist-buy" aria-labelledby="dropdownMenu-dist-buy">
+					  	<li><a>請先選擇縣市</a></li>
+					    <!-- <li><a>Action</a></li>
+					    <li><a>Another action</a></li>
+					    <li><a href="#">Something else here</a></li>
+					    <li><a href="#">Separated link</a></li> -->
+					  </ul>
+					</div>
+
+				  </div>
+				  <div class="form-group">
+				    <label for="buy-money" class="col-sm-3 control-label">房價</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-money" placeholder="輸入房價或選擇地區自動計算">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="buy-time" class="col-sm-3 control-label">居住時間</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-time" placeholder="輸入居住時間">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="buy-loanlimit" class="col-sm-3 control-label">貸款成數(%)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-loanlimit" placeholder="輸入貸款成數(%)">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="buy-loantime" class="col-sm-3 control-label">房貸年限</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-loantime" placeholder="輸入房貸年限">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="buy-loanrate" class="col-sm-3 control-label">房貸利率(%)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-loanrate" placeholder="輸入房貸利率(%)">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+			    	<label for="buy-houseinflat" class="col-sm-3 control-label">房屋增值率(%)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-houseinflat" placeholder="輸入房屋增值率(%)">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="buy-buyfee" class="col-sm-3 control-label">買屋手續費(%)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-buyfee" placeholder="輸入買屋手續費(%)">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="buy-sellfee" class="col-sm-3 control-label">賣屋手續費(%)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-sellfee" placeholder="輸入賣屋手續費(%)">
+				    </div>
+				  </div>
+				  
+
+				  <!-- <div class="form-group">
+				    <label for="buy-investreturn" class="col-sm-3 control-label">投資報酬率(%)</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="buy-investreturn" placeholder="輸入投資報酬率(%)">
+				    </div>
+				  </div> -->
+				 
+				  <div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10">
+				      <button class="btn btn-default calculate-btn" id = "cal-btn-buy">計算</button>
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-3">初始開銷</div>
+				    <div class="col-sm-6">
+				      <div id = "buy-initcost"></div>
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-3">累計房貸</div>
+				    <div class="col-sm-6">
+				      <div id = "buy-totalloan"></div>
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-3">累計稅</div>
+				    <div class="col-sm-6">
+				      <div id = "buy-totaltax"></div>
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-3">機會成本</div>
+				    <div class="col-sm-6">
+				      <div id = "buy-oppotunitycost"></div>
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-3">賣房結餘</div>
+				    <div class="col-sm-6">
+				      <div id = "buy-sellbalance"></div>
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-3">總支出</div>
+				    <div class="col-sm-6">
+				      <div id = "buy-totalcost"></div>
+				    </div>
+				  </div>
+
+				</form>
+			</div>
+		</div>
+		<div class = "sec-container">
+			<form class="form-horizontal" role="form">
+				<div>環境因素</div>
+				
+				<div class="form-group">
+			    	<label for="invest-return" class="col-sm-2 control-label">投資報酬率(%)</label>
+				    <div class="col-sm-2">
+				      <input type="text" class="form-control" id="invest-return" placeholder="輸入投資報酬率(%)">
+				    </div>
+				</div>
+				<!-- <div class="form-group">
+			    	<label for="currency-inflat" class="col-sm-2 control-label">通貨膨脹(%)</label>
+				    <div class="col-sm-2">
+				      <input type="text" class="form-control" id="currency-inflat" placeholder="輸入通貨膨脹(%)">
+				    </div>
+				</div>
+				<div class="form-group">
+				    <div class="col-sm-3">實質報酬率</div>
+				    <div class="col-sm-6">
+				      <div id = "actual-return"></div>
+				    </div>
+				  </div> -->
+			</form>
+
+		</div>
+	</div>
+
+</body>
+</html>
+

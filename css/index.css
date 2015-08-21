@@ -1,0 +1,16 @@
+body{
+	padding-top: 100px;
+}
+
+.sec-container{
+	width: 100%;
+	display: table;
+}
+
+.fl-left{
+	float: left;
+}
+
+.calculator-container{
+	width: 48%;
+}
