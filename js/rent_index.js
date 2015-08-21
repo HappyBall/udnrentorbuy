@@ -1,9 +1,11 @@
 var city_dict = {};
-var city_chose_rent = "";
+// var city_chose_rent = "";
+var city_chose_budget = "";
 var city_chose_buy = "";
 var dist_chose_buy = "";
 var rent_object = {};
 var buy_object = {};
+var budget_object = {};
 var investreturn = 0;
 var currencyinflat = 0;
 var actual_invest_return = 0;
@@ -37,9 +39,22 @@ $(document).ready(function(){
 		for (var i in Object.keys(city_dict)){
 			d3.select(".dropdown-city-rent").append("li").append("a").text(Object.keys(city_dict)[i]);
 			d3.select(".dropdown-city-buy").append("li").append("a").text(Object.keys(city_dict)[i]);
+			d3.select(".dropdown-budget").append("li").append("a").text(Object.keys(city_dict)[i]);
 		}
 
-		$(".dropdown-city-rent li").click(function(){
+		$(".dropdown-budget li").click(function(){
+			var city_clicked = $(this).find("a").text();
+
+			if(city_clicked != city_chose_budget){
+				$("#dropdownMenu-budget").html(city_clicked + "<span class='caret'></span>");
+
+				city_chose_budget = city_clicked;
+			}
+
+			// console.log(city_chose_budget);
+		});
+
+		/*$(".dropdown-city-rent li").click(function(){
 			// console.log("hi");
 			var city_clicked = $(this).find("a").text();
 
@@ -72,7 +87,7 @@ $(document).ready(function(){
 			}
 
 
-		});
+		});*/
 
 		$(".dropdown-city-buy li").click(function(){
 			// console.log("hi");
@@ -186,7 +201,7 @@ $(document).ready(function(){
 			var totalLoan = 0, loanPerYear = 0, loanPerMonth = 0;
 
 			if(buy_object['loanrate'] == 0){
-				loanPerMonth = loan/(buy_object['time']*12)
+				loanPerMonth = loan/(buy_object['loantime']*12)
 				loanPerYear = loanPerMonth*12;
 				totalLoan = loan;
 			}
@@ -231,6 +246,80 @@ $(document).ready(function(){
 			return false;	
 		});
 
+		$("#cal-btn-budget").click(function(){
+			budgetObjectInit();
+
+			if (city_chose_budget == "")
+				alert("請選擇想居住的縣市!");
+			else if(budget_object['budgetpermonth'] == 0)
+				alert("請輸入正確房貸支出!（不能為0）");
+			else if(budget_object['loanlimit'] == 0 || budget_object['loanlimit'] > 100)
+				alert("請輸入正確貸款成數!（不能為0也不能超過100）");
+			else if(budget_object['loantime'] == 0)
+				alert("請輸入正確房貸年限!（不能為0）");
+			else if(budget_object['square'] == 0)
+				alert("請輸入正確房屋坪數!（不能為0）");
+			else{
+				updateInputValuesBudget();
+
+				var loanMonthRate = budget_object['loanrate']/12;
+
+				if(budget_object['loanrate'] == 0)
+					var loan = budget_object['budgetpermonth'] * budget_object['loantime']*12;
+				else
+					var loan = budget_object['budgetpermonth'] * (1 - Math.pow(1 + loanMonthRate, budget_object['loantime']*(-12))) / loanMonthRate;
+
+				var house_price = loan / budget_object['loanlimit'];
+
+				var firstPay = house_price * (1 - budget_object['loanlimit']);
+
+				var pricePerSquare = house_price / budget_object['square'];
+
+				console.log(pricePerSquare);
+
+				var distsArr = [];
+
+				for (var i in city_dict[city_chose_budget]){
+					var temp = {};
+					temp['dist'] = i;
+					temp['pricepsquare'] = parseFloat(city_dict[city_chose_budget][i]);
+					distsArr.push(temp);
+				}
+
+
+				distsArr.sort(function(a, b){
+					return b.pricepsquare - a.pricepsquare;
+				});
+
+				console.log(distsArr);
+
+				distsStr = "";
+
+				count = 0;
+
+				for (var i in distsArr){
+					if(distsArr[i]['pricepsquare'] < pricePerSquare){
+						if(count >= 10)
+							break;
+						if(count != 0)
+							distsStr += "、";
+						distsStr += distsArr[i]['dist'];
+						count++;
+					}
+				}
+
+				console.log(distsStr);
+
+				if(distsStr.length == 0)
+					distsStr = "沒有符合的區域";
+
+				$("#budget-result").html("採本息平均攤還法<br>推算可購買的房屋總價為" + house_price + "元<br>可貸款金額為" + loan + "元，須準備自備款" + firstPay + "元<br>若想住" + budget_object['square'] + "坪的房屋，估算每坪單價約" + pricePerSquare + "元<br>依所選縣市可居住的區域為：" + distsStr + "。" );
+
+			}
+
+			return false;
+		});
+
 
 	});
 
@@ -258,6 +347,14 @@ function buyObjectInit(){
 	buy_object['sellfee'] = isNaN(parseFloat($("#buy-sellfee").val()))? 0 : parseFloat($("#buy-sellfee").val())/100;
 }
 
+function budgetObjectInit(){
+	budget_object['budgetpermonth'] = isNaN(parseInt($("#budget-budgetpermonth").val()))? 0 : parseInt($("#budget-budgetpermonth").val());
+	budget_object['loanlimit'] = isNaN(parseFloat($("#budget-loanlimit").val()))? 0 : parseFloat($("#budget-loanlimit").val())/100;
+	budget_object['loantime'] = isNaN(parseInt($("#budget-loantime").val()))? 0 : parseInt($("#budget-loantime").val());
+	budget_object['loanrate'] = isNaN(parseFloat($("#budget-loanrate").val()))? 0 : parseFloat($("#budget-loanrate").val())/100;
+	budget_object['square'] = isNaN(parseInt($("#budget-square").val()))? 0 : parseInt($("#budget-square").val());
+}
+
 function updateInputValuesRent(){
 	// $("#rent-square").val(rent_object['square'] + " 坪");
 	$("#rent-money").val(rent_object['money'] + " 元");
@@ -278,6 +375,14 @@ function updateInputValuesBuy(){
 	$("#buy-houseinflat").val(buy_object['inflat']*100 + " %");
 	$("#buy-buyfee").val(buy_object['buyfee']*100 + " %");
 	$("#buy-sellfee").val(buy_object['sellfee']*100 + " %");
+}
+
+function updateInputValuesBudget(){
+	$("#budget-budgetpermonth").val(budget_object['budgetpermonth'] + " 元");
+	$("#budget-loanlimit").val(budget_object['loanlimit']*100 + " %");
+	$("#budget-loantime").val(budget_object['loantime'] + " 年");
+	$("#budget-loanrate").val(budget_object['loanrate']*100 + " %");
+	$("#budget-square").val(budget_object['square'] + " 坪");
 }
 
 function updateEnvironment(){
