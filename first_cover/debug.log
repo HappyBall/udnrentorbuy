@@ -1,0 +1,9 @@
+[0824/085751:ERROR:gl_surface_egl.cc(133)] eglInitialize failed with error UNKNOWN
+[0824/085751:ERROR:gl_surface_win.cc(97)] GLSurfaceEGL::InitializeOneOff failed.
+[0824/085803:ERROR:renderer_main.cc(226)] Running without renderer sandbox
+[0824/085803:ERROR:renderer_main.cc(226)] Running without renderer sandbox
+[0824/085803:ERROR:renderer_main.cc(226)] Running without renderer sandbox
+[0824/085803:INFO:dhcp_proxy_script_adapter_fetcher_win.cc(264)] Error fetching PAC URL from DHCP: 2
+[0824/085803:INFO:dhcp_proxy_script_adapter_fetcher_win.cc(264)] Error fetching PAC URL from DHCP: 2
+[0824/085803:INFO:dhcp_proxy_script_adapter_fetcher_win.cc(264)] Error fetching PAC URL from DHCP: 2
+[0824/085805:INFO:CONSOLE(0)] "event.returnValue is deprecated. Please use the standard event.preventDefault() instead.", source:  (0)
