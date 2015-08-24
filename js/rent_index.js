@@ -323,6 +323,46 @@ $(document).ready(function(){
 
 	});
 
+	d3.json("data/taipei_dists_equal.json", function(data_equal_rent){
+		console.log(data_equal_rent);
+		$('#taiper-equalrent-chart').highcharts({
+	        title: {
+	            text: 'Monthly Average Temperature',
+	            x: -20 //center
+	        },
+	        credits: {
+	        	enabled: false
+	        },
+	        subtitle: {
+	            text: 'Source: WorldClimate.com',
+	            x: -20
+	        },
+	        xAxis: {
+	            categories: [10, 15, 20, 25, 30, 35, 40]
+	        },
+	        yAxis: {
+	            title: {
+	                text: '租金（元）'
+	            },
+	            plotLines: [{
+	                value: 0,
+	                width: 1,
+	                color: '#808080'
+	            }]
+	        },
+	        tooltip: {
+	            valueSuffix: '元'
+	        },
+	        legend: {
+	            layout: 'vertical',
+	            align: 'right',
+	            verticalAlign: 'middle',
+	            borderWidth: 0
+	        },
+	        series: data_equal_rent
+	    });
+	});
+
 });
 
 function rentObjectInit(){
