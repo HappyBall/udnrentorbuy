@@ -11,6 +11,8 @@ var currencyinflat = 0;
 var actual_invest_return = 0;
 var house_tax = 0.2*0.012;
 
+var taiperDistsList = ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"];
+
 //---------------------------------------------------------------------------
 
 if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -19,6 +21,8 @@ if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.u
 }
 
 $(document).ready(function(){
+
+	$("#first-cover").height($(window).height());
 
 	rentObjectInit();
 
@@ -325,7 +329,9 @@ $(document).ready(function(){
 
 	d3.json("data/taipei_dists_equal.json", function(data_equal_rent){
 		console.log(data_equal_rent);
-		$('#taiper-equalrent-chart').highcharts({
+		// var reverseArr = [];
+
+		/*$('#taipei-equalrent-chart').highcharts({
 	        title: {
 	            text: 'Monthly Average Temperature',
 	            x: -20 //center
@@ -358,6 +364,33 @@ $(document).ready(function(){
 	            align: 'right',
 	            verticalAlign: 'middle',
 	            borderWidth: 0
+	        },
+	        series: data_equal_rent
+	    });*/
+
+		$('#taipei-equalrent-chart').highcharts({
+	        chart: {
+	            type: 'bar'
+	        },
+	        title: {
+	            text: 'Stacked bar chart'
+	        },
+	        xAxis: {
+	            categories: taiperDistsList
+	        },
+	        yAxis: {
+	            min: 0,
+	            title: {
+	                text: 'Total fruit consumption'
+	            }
+	        },
+	        legend: {
+	            reversed: true
+	        },
+	        plotOptions: {
+	            series: {
+	                stacking: 'normal'
+	            }
 	        },
 	        series: data_equal_rent
 	    });
