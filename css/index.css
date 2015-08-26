@@ -8,15 +8,143 @@ body{
 	padding: 0;
 }
 
+
+
 .sec-container{
 	width: 100%;
 	display: table;
+}
+
+.font-bold{
+	font-weight: bold;
 }
 
 .fl-left{
 	float: left;
 }
 
-.calculator-container{
-	width: 48%;
+.mid-title{
+	font-size: 34px;
+}
+
+.sm-title{
+	font-size: 25px;
+}
+
+.content-text{
+	font-size: 21px;
+}
+
+.myfont{
+	font-family: 微軟正黑體;
+}
+
+.blue-font{
+	color: #00abc7;
+}
+
+.gray-font{
+	color: #999999;
+}
+
+
+.house-img{
+	display: table;
+	margin: auto;
+	margin-bottom: -4px;
+}
+
+#buy-form{
+	width: 100%;
+	display: table;
+	padding-left: 5%;
+	border-top: 1px solid #999999;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+#rent-form{
+	width: 100%;
+	display: table;
+	padding-left: 5%;
+	border-top: 1px solid #999999;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.buy-form-blocks{
+	width: 50%;
+}
+
+.rent-form-blocks{
+	width: 50%;
+}
+
+#cal-btn-rent-buy-block{
+	margin-left: 38%;
+}
+
+#cal-btn-rent-buy{
+	width: 252px;
+	height: 65px;
+	font-weight: bold;
+	font-family: 微軟正黑體;
+	font-size: 30px;
+	color: #00abc7;
+	border-radius: 10px;
+}
+
+#rent-buy-result-container{
+	background-color: rgba(0,171,199,0.15);
+	display: none;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.result-container{
+	width: 50%;
+	padding-left: 15%;
+}
+
+#buy-result{
+	border-right: 1px solid #999999;
+}
+
+#rent-buy-compare-text{
+	display: table;
+	margin: auto;
+	font-size: 20px;
+}
+
+#rent-buy-compare-num{
+	display: table;
+	margin: auto;
+	font-size: 40px;
+}
+
+#rent-buy-compare-img{
+	display: table;
+	margin: auto;
+}
+
+#budget-container{
+	border-top: 1px solid #999999;
+	background-color: rgba(0,171,199,0.15);
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+#budget-form{
+	/*margin: auto;	*/
+	/*padding-left: 30%;*/
+}
+
+#cal-btn-budget{
+	width: 252px;
+	height: 65px;
+	font-weight: bold;
+	font-family: 微軟正黑體;
+	font-size: 30px;
+	color: #00abc7;
+	border-radius: 10px;
 }

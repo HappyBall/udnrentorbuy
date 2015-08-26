@@ -60,7 +60,7 @@
                             id: 'money022',
                             display: 'none',
                             type: 'image',
-                            rect: ['541px', '241px', '170px', '176px', 'auto', 'auto'],
+                            rect: ['531px', '188px', '170px', '176px', 'auto', 'auto'],
                             fill: ["rgba(0,0,0,0)",im+"money022.png",'0px','0px'],
                             transform: [[],['360']]
                         },
@@ -68,28 +68,28 @@
                             id: 'abc3',
                             display: 'none',
                             type: 'image',
-                            rect: ['600px', '411px', '40px', '42px', 'auto', 'auto'],
+                            rect: ['598px', '358px', '40px', '42px', 'auto', 'auto'],
                             fill: ["rgba(0,0,0,0)",im+"abc3.png",'0px','0px']
                         },
                         {
                             id: 'house032',
                             display: 'none',
                             type: 'image',
-                            rect: ['74px', '207px', '1057px', '232px', 'auto', 'auto'],
+                            rect: ['74px', '154px', '1057px', '232px', 'auto', 'auto'],
                             fill: ["rgba(0,0,0,0)",im+"house032.png",'0px','0px']
                         },
                         {
                             id: 'word23',
                             display: 'none',
                             type: 'image',
-                            rect: ['252px', '473px', '717px', '374px', 'auto', 'auto'],
+                            rect: ['252px', '409px', '717px', '374px', 'auto', 'auto'],
                             fill: ["rgba(0,0,0,0)",im+"word23.png",'0px','0px']
                         }
                     ],
                     style: {
                         '${Stage}': {
                             isStage: true,
-                            rect: ['null', 'null', '1200px', '970px', 'auto', 'auto'],
+                            rect: ['null', 'null', '1200px', '800px', 'auto', 'auto'],
                             overflow: 'hidden',
                             fill: ["rgba(255,255,255,1)"]
                         }
@@ -137,27 +137,47 @@
                             "linear",
                             "${money022}",
                             '-203px',
-                            '241px'
+                            '188px'
                         ],
                         [
                             "eid149",
                             "top",
                             1493,
-                            944,
+                            507,
                             "linear",
                             "${money022}",
-                            '241px',
-                            '255px'
+                            '188px',
+                            '194px'
+                        ],
+                        [
+                            "eid191",
+                            "top",
+                            2000,
+                            437,
+                            "linear",
+                            "${money022}",
+                            '194px',
+                            '205px'
                         ],
                         [
                             "eid154",
                             "top",
                             3126,
-                            538,
+                            374,
                             "linear",
                             "${money022}",
-                            '255px',
-                            '242px'
+                            '205px',
+                            '192px'
+                        ],
+                        [
+                            "eid193",
+                            "top",
+                            3500,
+                            164,
+                            "linear",
+                            "${money022}",
+                            '192px',
+                            '189px'
                         ],
                         [
                             "eid155",
@@ -166,8 +186,8 @@
                             336,
                             "linear",
                             "${money022}",
-                            '242px',
-                            '244px'
+                            '189px',
+                            '191px'
                         ],
                         [
                             "eid181",
@@ -176,8 +196,8 @@
                             376,
                             "linear",
                             "${money022}",
-                            '244px',
-                            '258px'
+                            '191px',
+                            '204px'
                         ],
                         [
                             "eid159",
@@ -186,8 +206,8 @@
                             250,
                             "linear",
                             "${money022}",
-                            '258px',
-                            '246px'
+                            '204px',
+                            '193px'
                         ],
                         [
                             "eid183",
@@ -196,18 +216,28 @@
                             341,
                             "linear",
                             "${money022}",
-                            '246px',
-                            '242px'
+                            '193px',
+                            '189px'
                         ],
                         [
                             "eid160",
                             "top",
                             5591,
-                            608,
+                            409,
                             "linear",
                             "${money022}",
-                            '242px',
-                            '258px'
+                            '189px',
+                            '197px'
+                        ],
+                        [
+                            "eid192",
+                            "top",
+                            6000,
+                            199,
+                            "linear",
+                            "${money022}",
+                            '197px',
+                            '205px'
                         ],
                         [
                             "eid172",
@@ -216,8 +246,8 @@
                             500,
                             "linear",
                             "${money022}",
-                            '258px',
-                            '246px'
+                            '205px',
+                            '193px'
                         ],
                         [
                             "eid182",
@@ -226,8 +256,8 @@
                             506,
                             "linear",
                             "${money022}",
-                            '246px',
-                            '241px'
+                            '193px',
+                            '188px'
                         ],
                         [
                             "eid146",
@@ -277,7 +307,7 @@
                             "linear",
                             "${money022}",
                             '532px',
-                            '535px'
+                            '534px'
                         ],
                         [
                             "eid145",
@@ -286,8 +316,8 @@
                             944,
                             "linear",
                             "${money022}",
-                            '535px',
-                            '397px'
+                            '534px',
+                            '376px'
                         ],
                         [
                             "eid153",
@@ -296,7 +326,7 @@
                             538,
                             "linear",
                             "${money022}",
-                            '397px',
+                            '376px',
                             '522px'
                         ],
                         [
@@ -317,7 +347,7 @@
                             "linear",
                             "${money022}",
                             '661px',
-                            '377px'
+                            '376px'
                         ],
                         [
                             "eid171",
@@ -326,8 +356,8 @@
                             1006,
                             "linear",
                             "${money022}",
-                            '377px',
-                            '541px'
+                            '376px',
+                            '531px'
                         ],
                         [
                             "eid29",
@@ -378,6 +408,26 @@
                             "${money}",
                             'block',
                             'none'
+                        ],
+                        [
+                            "eid190",
+                            "top",
+                            1493,
+                            0,
+                            "linear",
+                            "${word23}",
+                            '409px',
+                            '409px'
+                        ],
+                        [
+                            "eid189",
+                            "top",
+                            1493,
+                            0,
+                            "linear",
+                            "${house032}",
+                            '154px',
+                            '154px'
                         ],
                         [
                             "eid148",
@@ -440,6 +490,16 @@
                             '-583px'
                         ],
                         [
+                            "eid187",
+                            "top",
+                            1493,
+                            0,
+                            "linear",
+                            "${abc3}",
+                            '358px',
+                            '358px'
+                        ],
+                        [
                             "eid141",
                             "left",
                             1000,
@@ -448,6 +508,16 @@
                             "${house032}",
                             '74px',
                             '74px'
+                        ],
+                        [
+                            "eid188",
+                            "left",
+                            1493,
+                            0,
+                            "linear",
+                            "${house032}",
+                            '75px',
+                            '75px'
                         ],
                         [
                             "eid27",
@@ -486,8 +556,8 @@
                             0,
                             "linear",
                             "${abc3}",
-                            '600px',
-                            '600px'
+                            '598px',
+                            '598px'
                         ],
                         [
                             "eid40",

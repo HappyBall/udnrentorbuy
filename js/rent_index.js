@@ -9,7 +9,6 @@ var budget_object = {};
 var investreturn = 0;
 var currencyinflat = 0;
 var actual_invest_return = 0;
-var house_tax = 0.2*0.012;
 
 var taiperDistsList = ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"];
 
@@ -50,7 +49,7 @@ $(document).ready(function(){
 			var city_clicked = $(this).find("a").text();
 
 			if(city_clicked != city_chose_budget){
-				$("#dropdownMenu-budget").html(city_clicked + "<span class='caret'></span>");
+				$("#dropdownMenu-budget").html(city_clicked + "<span><img src='img/popdown.png'></span>");
 
 				city_chose_budget = city_clicked;
 			}
@@ -98,7 +97,7 @@ $(document).ready(function(){
 			var city_clicked = $(this).find("a").text();
 
 			if(city_clicked != city_chose_buy){
-				$("#dropdownMenu-city-buy").html(city_clicked + "<span class='caret'></span>");
+				$("#dropdownMenu-city-buy").html(city_clicked + "<span><img src='img/popdown.png'></span>");
 
 				var myNode = document.getElementsByClassName("dropdown-dist-buy")[0];
 				while (myNode.firstChild) {
@@ -110,7 +109,7 @@ $(document).ready(function(){
 					d3.select(".dropdown-dist-buy").append("li").append("a").text(Object.keys(city_dict[city_clicked])[j]);
 				}
 
-				$("#dropdownMenu-dist-buy").html("地區 <span class='caret'></span>");
+				$("#dropdownMenu-dist-buy").html("地區 <span><img src='img/popdown.png'></span>");
 				$("#buy-money").val("");
 
 				city_chose_buy = city_clicked;
@@ -121,7 +120,7 @@ $(document).ready(function(){
 					// console.log(dist_clicked);
 
 					if(dist_clicked != dist_chose_buy){
-						$("#dropdownMenu-dist-buy").html(dist_clicked + "<span class='caret'></span>");
+						$("#dropdownMenu-dist-buy").html(dist_clicked + "<span><img src='img/popdown.png'></span>");
 						// console.log(parseInt($("#buy-square").val()));
 						if(!isNaN(parseFloat($("#buy-square").val()))){
 							var squs = parseFloat($("#buy-square").val());
@@ -144,39 +143,134 @@ $(document).ready(function(){
 
 		});
 
-		$("#cal-btn-rent").click(function(){
+		$("#cal-btn-rent-buy").click(function(){
+			buyObjectInit();
+			updateInputValuesBuy();
 			rentObjectInit();
 			// console.log(rent_object);
 			updateInputValuesRent();
 
 			investreturn = isNaN(parseInt($("#invest-return").val()))? 0 : parseInt($("#invest-return").val())/100;
 			// currencyinflat = isNaN(parseInt($("#currency-inflat").val()))? 0 : parseInt($("#currency-inflat").val())/100;
-			actual_invest_return = investreturn*0.85;
+			actual_invest_return = investreturn;
+
+			updateEnvironment();
+
+			var firstPay = buy_object['money'] * (1 - buy_object['loanlimit']);
+			var loan = buy_object['money'] * buy_object['loanlimit'];
+			var buyfee = buy_object['money'] * buy_object['buyfee'];
+			var loanMonthRate = buy_object['loanrate']/12;
+
+			//calculate buy init cost
+			var initCost = firstPay + buyfee;
+			$("#buy-initcost").text("$" + Math.round(initCost));
+
+			//calculate buy total loan
+
+			var totalLoan = 0, loanPerYear = 0, loanPerMonth = 0;
+
+			if(buy_object['loanrate'] == 0){
+				loanPerMonth = loan/(buy_object['loantime']*12)
+				loanPerYear = loanPerMonth*12;
+				totalLoan = loan;
+			}
+			else{
+				loanPerMonth = (loan * loanMonthRate) / (1 - Math.pow(1 + loanMonthRate, buy_object['loantime']*(-12)));
+				loanPerYear = loanPerMonth * 12;
+				totalLoan = loanPerYear * Math.min(buy_object['time'], buy_object['loantime']);
+			}
+			$("#buy-totalloan").text("$" + Math.round(totalLoan));
+
+			//calculate buy total tax
+			var totalTax = buy_object['money'] * buy_object['housetax'] * buy_object['time'];
+			$("#buy-totaltax").text("$" + Math.round(totalTax));
+
+			//calculate buy oppotunity cost
+			var initCostOppo = initCost*Math.pow(1+actual_invest_return, buy_object['time']) - initCost;
+			var taxOppo =  calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, buy_object['money'] * buy_object['housetax'] * (1 + actual_invest_return)) - buy_object['money'] * buy_object['housetax'] * (buy_object['time'] - 1);
+
+			if(buy_object['loantime'] >= buy_object['time'])
+				var loanOppo = calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, loanPerYear * (1 + actual_invest_return)) - loanPerYear * Math.min((buy_object['time'] - 1), buy_object['loantime']);
+			else
+				var loanOppo = calculateGeoSeries(1 + actual_invest_return, buy_object['loantime'], loanPerYear * Math.pow(1+actual_invest_return, buy_object['time'] - buy_object['loantime'])) - loanPerYear * Math.min((buy_object['time'] - 1), buy_object['loantime']);
+
+			$("#buy-oppotunitycost").text("$" + Math.round(initCostOppo + taxOppo + loanOppo));
+
+			//calculate buy sell balance
+			var sellPrice = buy_object['money'] * Math.pow(1+buy_object['inflat'], buy_object['time']);
+			var loanleft = 0;
+
+			if(buy_object['loanrate'] == 0)
+				loanleft = Math.max(0, loan - loanPerMonth*buy_object['time']*12);
+			else
+				loanleft = Math.max(0, loan*Math.pow(1+loanMonthRate, buy_object['time']*12) - loanPerMonth*(Math.pow(1+loanMonthRate, buy_object['time']*12) - 1)/loanMonthRate);
+
+			var sellBalance = sellPrice*(1 - buy_object['sellfee']) - loanleft;
+			$("#buy-sellbalance").text("$" + Math.round(sellBalance));
+
+			//calculate total cost
+			var totalCost = initCost + totalTax + totalLoan + (initCostOppo + taxOppo + loanOppo) - sellBalance;
+			$("#buy-totalcost").text("$" + Math.round(totalCost) );
+
+			//calculate rent init cost
+			var initCost_rent = rent_object['money'] * (rent_object['deposit'] + rent_object['fee']);
+			$("#rent-initcost").text("$" + Math.round(initCost_rent));
+
+			//calculate rent total money 
+			var totalMoney_rent = calculateGeoSeries(1+rent_object['inflat'], rent_object['time'], rent_object['money']*12);
+			$("#rent-totalmoney").text("$" + Math.round(totalMoney_rent) );
+
+			//calculate rent oppotunity cost
+			var initCostOppo_rent = initCost_rent * (Math.pow(1+actual_invest_return, rent_object['time']) - 1);
+			var totalMoneyOppo_rent = calculateGeoSeries( (1+actual_invest_return)/(1+rent_object['inflat']), rent_object['time'], rent_object['money']*12*Math.pow(1+rent_object['inflat'], rent_object['time'] - 1)) - totalMoney_rent;
+			$("#rent-oppotunitycost").text("$" + Math.round(totalMoneyOppo_rent + initCostOppo_rent) );
+
+			//calculate rent deposit back
+			var depositBack_rent = rent_object['money'] * rent_object['deposit'];
+			$("#rent-depositback").text("$" + Math.round(depositBack_rent) );
+
+			//calculate total cost
+			var totalCost_rent = initCost_rent + initCostOppo_rent + totalMoney_rent + totalMoneyOppo_rent - depositBack_rent;
+			$("#rent-totalcost").text("$" + Math.round(totalCost_rent) );
+
+			$("#rent-buy-result-container").css("display", "table");
+
+			return false;	
+		});
+
+		/*$("#cal-btn-rent").click(function(){
+			rentObjectInit();
+			// console.log(rent_object);
+			updateInputValuesRent();
+
+			investreturn = isNaN(parseInt($("#invest-return").val()))? 0 : parseInt($("#invest-return").val())/100;
+			// currencyinflat = isNaN(parseInt($("#currency-inflat").val()))? 0 : parseInt($("#currency-inflat").val())/100;
+			actual_invest_return = investreturn;
 
 			// console.log("actual_invest_return = " + actual_invest_return);
 
 			updateEnvironment();
 
 			//calculate rent init cost
-			var initCost = rent_object['money'] * (rent_object['deposit'] + rent_object['fee']);
-			$("#rent-initcost").text(Math.round(initCost) + " 元");
+			var initCost_rent = rent_object['money'] * (rent_object['deposit'] + rent_object['fee']);
+			$("#rent-initcost").text(Math.round(initCost_rent) + " 元");
 
 			//calculate rent total money 
-			var totalMoney = calculateGeoSeries(1+rent_object['inflat'], rent_object['time'], rent_object['money']*12);
-			$("#rent-totalmoney").text(Math.round(totalMoney) + " 元");
+			var totalMoney_rent = calculateGeoSeries(1+rent_object['inflat'], rent_object['time'], rent_object['money']*12);
+			$("#rent-totalmoney").text(Math.round(totalMoney_rent) + " 元");
 
 			//calculate rent oppotunity cost
-			var initCostOppo = initCost * (Math.pow(1+actual_invest_return, rent_object['time']) - 1);
-			var totalMoneyOppo = calculateGeoSeries( (1+actual_invest_return)/(1+rent_object['inflat']), rent_object['time'], rent_object['money']*12*Math.pow(1+rent_object['inflat'], rent_object['time'] - 1)) - totalMoney;
-			$("#rent-oppotunitycost").text(Math.round(totalMoneyOppo + initCostOppo) + " 元");
+			var initCostOppo_rent = initCost_rent * (Math.pow(1+actual_invest_return, rent_object['time']) - 1);
+			var totalMoneyOppo_rent = calculateGeoSeries( (1+actual_invest_return)/(1+rent_object['inflat']), rent_object['time'], rent_object['money']*12*Math.pow(1+rent_object['inflat'], rent_object['time'] - 1)) - totalMoney_rent;
+			$("#rent-oppotunitycost").text(Math.round(totalMoneyOppo_rent + initCostOppo_rent) + " 元");
 
 			//calculate rent deposit back
-			var depositBack = rent_object['money'] * rent_object['deposit'];
-			$("#rent-depositback").text(Math.round(depositBack) + " 元");
+			var depositBack_rent = rent_object['money'] * rent_object['deposit'];
+			$("#rent-depositback").text(Math.round(depositBack_rent) + " 元");
 
 			//calculate total cost
-			var totalCost = initCost + initCostOppo + totalMoney + totalMoneyOppo - depositBack;
-			$("#rent-totalcost").text(Math.round(totalCost) + " 元");
+			var totalCost_rent = initCost_rent + initCostOppo_rent + totalMoney_rent + totalMoneyOppo_rent - depositBack_rent;
+			$("#rent-totalcost").text(Math.round(totalCost_rent) + " 元");
 
 			return false;
 		});
@@ -187,7 +281,7 @@ $(document).ready(function(){
 
 			investreturn = isNaN(parseInt($("#invest-return").val()))? 0 : parseInt($("#invest-return").val())/100;
 			// currencyinflat = isNaN(parseInt($("#currency-inflat").val()))? 0 : parseInt($("#currency-inflat").val())/100;
-			actual_invest_return = investreturn*0.85;
+			actual_invest_return = investreturn;
 
 			updateEnvironment();
 
@@ -217,12 +311,12 @@ $(document).ready(function(){
 			$("#buy-totalloan").text(Math.round(totalLoan) + " 元");
 
 			//calculate buy total tax
-			var totalTax = buy_object['money'] * house_tax * buy_object['time'];
+			var totalTax = buy_object['money'] * buy_object['housetax'] * buy_object['time'];
 			$("#buy-totaltax").text(Math.round(totalTax) + " 元");
 
 			//calculate buy oppotunity cost
 			var initCostOppo = initCost*Math.pow(1+actual_invest_return, buy_object['time']) - initCost;
-			var taxOppo =  calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, buy_object['money'] * house_tax * (1 + actual_invest_return)) - buy_object['money'] * house_tax * (buy_object['time'] - 1);
+			var taxOppo =  calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, buy_object['money'] * buy_object['housetax'] * (1 + actual_invest_return)) - buy_object['money'] * buy_object['housetax'] * (buy_object['time'] - 1);
 
 			if(buy_object['loantime'] >= buy_object['time'])
 				var loanOppo = calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, loanPerYear * (1 + actual_invest_return)) - loanPerYear * Math.min((buy_object['time'] - 1), buy_object['loantime']);
@@ -248,7 +342,7 @@ $(document).ready(function(){
 			$("#buy-totalcost").text(Math.round(totalCost) + " 元");
 
 			return false;	
-		});
+		});*/
 
 		$("#cal-btn-budget").click(function(){
 			budgetObjectInit();
@@ -418,6 +512,7 @@ function buyObjectInit(){
 	buy_object['inflat'] = isNaN(parseFloat($("#buy-houseinflat").val()))? 0 : parseFloat($("#buy-houseinflat").val())/100;
 	buy_object['buyfee'] = isNaN(parseFloat($("#buy-buyfee").val()))? 0 : parseFloat($("#buy-buyfee").val())/100;
 	buy_object['sellfee'] = isNaN(parseFloat($("#buy-sellfee").val()))? 0 : parseFloat($("#buy-sellfee").val())/100;
+	buy_object['housetax'] = isNaN(parseFloat($("#buy-housetax").val()))? 0.2*0.012 : parseFloat($("#buy-housetax").val())/100;
 }
 
 function budgetObjectInit(){
@@ -448,6 +543,7 @@ function updateInputValuesBuy(){
 	$("#buy-houseinflat").val(buy_object['inflat']*100 + " %");
 	$("#buy-buyfee").val(buy_object['buyfee']*100 + " %");
 	$("#buy-sellfee").val(buy_object['sellfee']*100 + " %");
+	$("#buy-housetax").val(buy_object['housetax']*100 + " %");
 }
 
 function updateInputValuesBudget(){

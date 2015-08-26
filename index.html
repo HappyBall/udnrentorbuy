@@ -76,380 +76,370 @@
 	<div class = "container">
 		
 		<div class = "sec-container">
-			<form class="form-horizontal" role="form">
-				<div>環境因素</div>
-				
-				<div class="form-group">
-			    	<label for="invest-return" class="col-sm-2 control-label">投資報酬率(%)</label>
-				    <div class="col-sm-2">
-				      <input type="text" class="form-control" id="invest-return" placeholder="輸入投資報酬率(%)">
-				    </div>
+			<div class = "house-img"><img src="img/house.png"></div>
+			<form class="form-horizontal" role="form" id = "buy-form">
+				<div class = "sm-title myfont font-bold blue-font">買房</div>
+				<div class="fl-left buy-form-blocks">
+					<div class="form-group">
+					    <label for="buy-time" class="col-sm-3 control-label">居住時間</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-time" placeholder="輸入居住時間">
+					    </div>
+					</div>
+
+					<div class="form-group">
+						<label for="dropdownMenu-city-buy" class="col-sm-3 control-label">地區</label>
+					  	<div class="dropdown fl-left col-sm-3">
+						  <button class="btn btn-default dropdown-toggle col-sm-12" type="button" id="dropdownMenu-city-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    縣市
+						    <span><img src="img/popdown.png"></span>
+						  </button>
+						  <ul class="dropdown-menu dropdown-city-buy" aria-labelledby="dropdownMenu-city-buy">
+						    <!-- <li><a href="#">Action</a></li>
+						    <li><a href="#">Another action</a></li>
+						    <li><a href="#">Something else here</a></li>
+						    <li><a href="#">Separated link</a></li> -->
+						  </ul>
+						</div>
+						<div class="dropdown fl-left fl-left col-sm-3">
+						  <button class="btn btn-default dropdown-toggle col-sm-12" type="button" id="dropdownMenu-dist-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    地區
+						    <span><img src="img/popdown.png"></span>
+						  </button>
+						  <ul class="dropdown-menu dropdown-dist-buy" aria-labelledby="dropdownMenu-dist-buy">
+						  	<li><a>請先選擇縣市</a></li>
+						    <!-- <li><a>Action</a></li>
+						    <li><a>Another action</a></li>
+						    <li><a href="#">Something else here</a></li>
+						    <li><a href="#">Separated link</a></li> -->
+						  </ul>
+						</div>
+
+					</div>
+
+					<div class = "sm-title myfont gray-font">貸款</div>
+
+					<div class="form-group">
+					    <label for="buy-loanlimit" class="col-sm-3 control-label">貸款成數(%)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-loanlimit" placeholder="輸入貸款成數(%)">
+					    </div>
+					</div>
+
+					<div class="form-group">
+					    <label for="buy-loantime" class="col-sm-3 control-label">貸款年限</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-loantime" placeholder="輸入貸款年限">
+					    </div>
+					</div>
+
+					<div class="form-group">
+					    <label for="buy-loanrate" class="col-sm-3 control-label">房貸利率(%)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-loanrate" placeholder="輸入房貸利率(%)">
+					    </div>
+					</div>
+
+					<div class = "sm-title myfont gray-font">雜支</div>
+
+					<div class="form-group">
+					    <label for="buy-buyfee" class="col-sm-3 control-label">買屋手續費(%)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-buyfee" placeholder="輸入買屋手續費(%)">
+					    </div>
+					</div>
+
+					<div class="form-group">
+					    <label for="buy-housetax" class="col-sm-3 control-label">房屋稅(%)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-housetax" placeholder="輸入房屋稅(%)">
+					    </div>
+					</div>
+
+					<div class="form-group">
+					    <label for="buy-sellfee" class="col-sm-3 control-label">賣屋手續費(%)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-sellfee" placeholder="輸入賣屋手續費(%)">
+					    </div>
+					</div>
+
 				</div>
-				<!-- <div class="form-group">
-			    	<label for="currency-inflat" class="col-sm-2 control-label">通貨膨脹(%)</label>
-				    <div class="col-sm-2">
-				      <input type="text" class="form-control" id="currency-inflat" placeholder="輸入通貨膨脹(%)">
-				    </div>
+				<div class="fl-left buy-form-blocks">
+					<div class="form-group">
+					    <label for="buy-square" class="col-sm-3 control-label">坪數</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-square" placeholder="輸入坪數">
+					    </div>
+					</div>
+
+					<div class="form-group">
+					    <label for="buy-money" class="col-sm-3 control-label">房價</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-money" placeholder="輸入房價或選擇地區自動計算">
+					    </div>
+					</div>
+
+					<div class = "sm-title myfont gray-font">環境因素</div>
+
+					<div class="form-group">
+				    	<label for="buy-houseinflat" class="col-sm-3 control-label">房屋增值率(%)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="buy-houseinflat" placeholder="輸入房屋增值率(%)">
+					    </div>
+					</div>
+
+					<div class="form-group">
+				    	<label for="invest-return" class="col-sm-3 control-label">投資報酬率(%)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="invest-return" placeholder="輸入投資報酬率(%)">
+					    </div>
+					</div>
+
+					
+
 				</div>
-				<div class="form-group">
-				    <div class="col-sm-3">實質報酬率</div>
-				    <div class="col-sm-6">
-				      <div id = "actual-return"></div>
-				    </div>
-				  </div> -->
 			</form>
 
-		</div>
-
-		<div class = "sec-container">
-			<div class = "calculator-container fl-left" id = "rent-calculator">
-				<form class="form-horizontal" role="form">
-				  <!-- <div class="form-group">
-				    <label for="rent-square" class="col-sm-3 control-label">坪數</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="rent-square" placeholder="輸入坪數">
-				    </div>
-				  </div> -->
-				  <!-- <div class="form-group">
-				  	<div class="dropdown fl-left">
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-city-rent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    縣市
-					    <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu dropdown-city-rent" aria-labelledby="dropdownMenu-city-rent"> -->
-					    <!-- <li><a href="#">Action</a></li>
-					    <li><a href="#">Another action</a></li>
-					    <li><a href="#">Something else here</a></li>
-					    <li><a href="#">Separated link</a></li> -->
-					  <!-- </ul>
-					</div>
-					<div class="dropdown fl-left">
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-dist-rent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    地區
-					    <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu dropdown-dist-rent" aria-labelledby="dropdownMenu-dist-rent">
-					  	<li><a>請先選擇縣市</a></li> -->
-					    <!-- <li><a>Action</a></li>
-					    <li><a>Another action</a></li>
-					    <li><a href="#">Something else here</a></li>
-					    <li><a href="#">Separated link</a></li> -->
-					  <!-- </ul>
+			<form class="form-horizontal" role="form" id = "rent-form">
+				<div class = "sm-title myfont font-bold blue-font">租房</div>
+				<div class="fl-left rent-form-blocks">
+					<div class="form-group">
+					    <label for="rent-time" class="col-sm-3 control-label">居住時間</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="rent-time" placeholder="輸入居住時間">
+					    </div>
 					</div>
 
-				  </div> -->
-				  <div class="form-group">
-				    <label for="rent-money" class="col-sm-3 control-label">租金</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="rent-money" placeholder="輸入租金或選擇地區自動計算">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="rent-time" class="col-sm-3 control-label">居住時間</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="rent-time" placeholder="輸入居住時間">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="rent-deposit" class="col-sm-3 control-label">押金(月)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="rent-deposit" placeholder="輸入押金(月)">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="rent-inflat" class="col-sm-3 control-label">租金上漲率(%)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="rent-inflat" placeholder="輸入租金上漲率(%)">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="rent-agentfee" class="col-sm-3 control-label">仲介費(%)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="rent-agentfee" placeholder="輸入仲介費(%)">
-				    </div>
-				  </div>
-
-				  <!-- <div class="form-group">
-				    <label for="rent-investreturn" class="col-sm-3 control-label">投資報酬率(%)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="rent-investreturn" placeholder="輸入投資報酬率(%)">
-				    </div>
-				  </div> -->
-				 
-				  <div class="form-group">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <button class="btn btn-default calculate-btn" id = "cal-btn-rent">計算</button>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-3">初始開銷</div>
-				    <div class="col-sm-6">
-				      <div id = "rent-initcost"></div>
-				    </div>
-				  </div>
-
-				  <!-- <div class="form-group">
-				    <div class="col-sm-3">初始開銷機會成本</div>
-				    <div class="col-sm-6">
-				      <div id = "rent-initcostoppo"></div>
-				    </div>
-				  </div> -->
-
-				  <div class="form-group">
-				    <div class="col-sm-3">累計租金</div>
-				    <div class="col-sm-6">
-				      <div id = "rent-totalmoney"></div>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-3">機會成本</div>
-				    <div class="col-sm-6">
-				      <div id = "rent-oppotunitycost"></div>
-				    </div>
-				  </div>
-
-				  <!-- <div class="form-group">
-				    <div class="col-sm-3">租金機會成本</div>
-				    <div class="col-sm-6">
-				      <div id = "rent-totalmoneyoppo"></div>
-				    </div>
-				  </div> -->
-
-				  <div class="form-group">
-				    <div class="col-sm-3">押金退還</div>
-				    <div class="col-sm-6">
-				      <div id = "rent-depositback"></div>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-3">總支出</div>
-				    <div class="col-sm-6">
-				      <div id = "rent-totalcost"></div>
-				    </div>
-				  </div>
-
-				</form>
-			</div>
-
-			<div class = "calculator-container fl-left" id = "buy-calculator">
-				<form class="form-horizontal" role="form">
-				  <div class="form-group">
-				    <label for="buy-square" class="col-sm-3 control-label">坪數</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-square" placeholder="輸入坪數">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				  	<div class="dropdown fl-left">
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-city-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    縣市
-					    <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu dropdown-city-buy" aria-labelledby="dropdownMenu-city-buy">
-					    <!-- <li><a href="#">Action</a></li>
-					    <li><a href="#">Another action</a></li>
-					    <li><a href="#">Something else here</a></li>
-					    <li><a href="#">Separated link</a></li> -->
-					  </ul>
-					</div>
-					<div class="dropdown fl-left">
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-dist-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    地區
-					    <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu dropdown-dist-buy" aria-labelledby="dropdownMenu-dist-buy">
-					  	<li><a>請先選擇縣市</a></li>
-					    <!-- <li><a>Action</a></li>
-					    <li><a>Another action</a></li>
-					    <li><a href="#">Something else here</a></li>
-					    <li><a href="#">Separated link</a></li> -->
-					  </ul>
+					<div class="form-group">
+					    <label for="rent-money" class="col-sm-3 control-label">租金</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="rent-money" placeholder="輸入租金或選擇地區自動計算">
+					    </div>
 					</div>
 
-				  </div>
-				  <div class="form-group">
-				    <label for="buy-money" class="col-sm-3 control-label">房價</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-money" placeholder="輸入房價或選擇地區自動計算">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="buy-time" class="col-sm-3 control-label">居住時間</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-time" placeholder="輸入居住時間">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="buy-loanlimit" class="col-sm-3 control-label">貸款成數(%)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-loanlimit" placeholder="輸入貸款成數(%)">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="buy-loantime" class="col-sm-3 control-label">房貸年限</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-loantime" placeholder="輸入房貸年限">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="buy-loanrate" class="col-sm-3 control-label">房貸利率(%)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-loanrate" placeholder="輸入房貸利率(%)">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-			    	<label for="buy-houseinflat" class="col-sm-3 control-label">房屋增值率(%)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-houseinflat" placeholder="輸入房屋增值率(%)">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="buy-buyfee" class="col-sm-3 control-label">買屋手續費(%)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-buyfee" placeholder="輸入買屋手續費(%)">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="buy-sellfee" class="col-sm-3 control-label">賣屋手續費(%)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-sellfee" placeholder="輸入賣屋手續費(%)">
-				    </div>
-				  </div>
-				  
-
-				  <!-- <div class="form-group">
-				    <label for="buy-investreturn" class="col-sm-3 control-label">投資報酬率(%)</label>
-				    <div class="col-sm-6">
-				      <input type="text" class="form-control" id="buy-investreturn" placeholder="輸入投資報酬率(%)">
-				    </div>
-				  </div> -->
-				 
-				  <div class="form-group">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <button class="btn btn-default calculate-btn" id = "cal-btn-buy">計算</button>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-3">初始開銷</div>
-				    <div class="col-sm-6">
-				      <div id = "buy-initcost"></div>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-3">累計房貸</div>
-				    <div class="col-sm-6">
-				      <div id = "buy-totalloan"></div>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-3">累計稅</div>
-				    <div class="col-sm-6">
-				      <div id = "buy-totaltax"></div>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-3">機會成本</div>
-				    <div class="col-sm-6">
-				      <div id = "buy-oppotunitycost"></div>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-3">賣房結餘</div>
-				    <div class="col-sm-6">
-				      <div id = "buy-sellbalance"></div>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-3">總支出</div>
-				    <div class="col-sm-6">
-				      <div id = "buy-totalcost"></div>
-				    </div>
-				  </div>
-
-				</form>
-			</div>
-		</div>
-
-		<div class = "sec-container">
-			<form class="form-horizontal" role="form">
-				<div>算算看你的預算能買哪裡的房子！</div>
-
-				  <div class="form-group">
-				  	<div class="dropdown">
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-budget" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    縣市
-					    <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu dropdown-budget" aria-labelledby="dropdownMenu-budget">
-					    <!-- <li><a href="#">Action</a></li>
-					    <li><a href="#">Another action</a></li>
-					    <li><a href="#">Something else here</a></li>
-					    <li><a href="#">Separated link</a></li> -->
-					  </ul>
+					<div class="form-group">
+					    <label for="rent-agentfee" class="col-sm-3 control-label">仲介費(%)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="rent-agentfee" placeholder="輸入仲介費(%)">
+					    </div>
 					</div>
-				  </div>
-
-				  <div class="form-group">
-				    <label for="budget-budgetpermonth" class="col-sm-2 control-label">每個月的房貸支出(元)</label>
-				    <div class="col-sm-3">
-				      <input type="text" class="form-control" id="budget-budgetpermonth" placeholder="輸入每個月的房貸支出(元)">
-				    </div>
-				  </div>
-				
-				  <div class="form-group">
-				    <label for="budget-loanlimit" class="col-sm-2 control-label">貸款成數(%)</label>
-				    <div class="col-sm-3">
-				      <input type="text" class="form-control" id="budget-loanlimit" placeholder="輸入貸款成數(%)">
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <label for="budget-loantime" class="col-sm-2 control-label">房貸年限</label>
-				    <div class="col-sm-3">
-				      <input type="text" class="form-control" id="budget-loantime" placeholder="輸入房貸年限">
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <label for="budget-loanrate" class="col-sm-2 control-label">房貸利率(%)</label>
-				    <div class="col-sm-3">
-				      <input type="text" class="form-control" id="budget-loanrate" placeholder="輸入房貸利率(%)">
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <label for="budget-square" class="col-sm-2 control-label">想居住的房屋坪數(坪)</label>
-				    <div class="col-sm-3">
-				      <input type="text" class="form-control" id="budget-square" placeholder="輸入想居住的房屋坪數(坪)">
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <button class="btn btn-default calculate-btn" id = "cal-btn-budget">立即試算</button>
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				  	<div id = "budget-result"></div>
-				  </div>
+				</div>
+				<div class="fl-left rent-form-blocks">
+					<div class="form-group">
+					    <label for="rent-deposit" class="col-sm-3 control-label">押金(月)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="rent-deposit" placeholder="輸入押金(月)">
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="rent-inflat" class="col-sm-3 control-label">租金上漲率(%)</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="rent-inflat" placeholder="輸入租金上漲率(%)">
+					    </div>
+					</div>
+				</div>
 			</form>
 
+			<form class="form-horizontal" role="form" id = "btn-rent-buy-form">
+
+				<div class="form-group">
+				    <div class="col-sm-12" id = "cal-btn-rent-buy-block">
+				      <button class="btn btn-default calculate-btn" id = "cal-btn-rent-buy">立即試算</button>
+				    </div>
+				</div>
+			</form>
+
+			<div class = "container-fluid col-sm-10 col-sm-offset-1" id = "rent-buy-result-container">
+
+				<div class = "myfont font-bold" id = "rent-buy-compare-text">每年買房比租房多花</div>
+				<div class = "myfont font-bold" id = "rent-buy-compare-num">$97388</div>
+				<div id = "rent-buy-compare-img"><img src="img/buy_better.png"></div>
+				<div class = "calculate-results">
+					<div class = "result-container fl-left" id = "buy-result">
+						<form class="form-horizontal" role="form">
+							<div class="form-group">
+								<div>
+									<div class = "fl-left" id = "buy-check-img"><img src="img/check.png"></div>
+									<div class = "fl-left" id = "buy-check-text">買房</div>
+								</div>
+							</div>
+							
+							  <div class="form-group">
+							    <div class="col-sm-4">初始開銷</div>
+							    <div class="col-sm-6">
+							      <div id = "buy-initcost"></div>
+							    </div>
+							  </div>
+
+							  <div class="form-group">
+							    <div class="col-sm-4">累計房貸</div>
+							    <div class="col-sm-6">
+							      <div id = "buy-totalloan"></div>
+							    </div>
+							  </div>
+
+							  <div class="form-group">
+							    <div class="col-sm-4">累計稅</div>
+							    <div class="col-sm-6">
+							      <div id = "buy-totaltax"></div>
+							    </div>
+							  </div>
+
+							  <div class="form-group">
+							    <div class="col-sm-4">機會成本</div>
+							    <div class="col-sm-6">
+							      <div id = "buy-oppotunitycost"></div>
+							    </div>
+							  </div>
+
+							  <div class="form-group">
+							    <div class="col-sm-4">賣房結餘</div>
+							    <div class="col-sm-6">
+							      <div id = "buy-sellbalance"></div>
+							    </div>
+							  </div>
+
+							  <div class="form-group">
+							    <div class="col-sm-4">總支出</div>
+							    <div class="col-sm-6">
+							      <div id = "buy-totalcost"></div>
+							    </div>
+							  </div>
+						</form>
+					</div>
+
+					<div class = "result-container fl-left" id = "rent-result">
+						<form class="form-horizontal" role="form">
+						  <div class="form-group">
+								<div>
+									<div class = "fl-left" id = "rent-check-img"><img src="img/uncheck.png"></div>
+									<div class = "fl-left" id = "rent-check-text">租房</div>
+								</div>
+						  </div>
+
+						  <div class="form-group">
+							    <div class="col-sm-4">初始開銷</div>
+							    <div class="col-sm-6">
+							      <div id = "rent-initcost"></div>
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <div class="col-sm-4">累計租金</div>
+							    <div class="col-sm-6">
+							      <div id = "rent-totalmoney"></div>
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <div class="col-sm-4">機會成本</div>
+							    <div class="col-sm-6">
+							      <div id = "rent-oppotunitycost"></div>
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <div class="col-sm-4">押金退還</div>
+							    <div class="col-sm-6">
+							      <div id = "rent-depositback"></div>
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <div class="col-sm-4">總支出</div>
+							    <div class="col-sm-6">
+							      <div id = "rent-totalcost"></div>
+							    </div>
+							</div>
+
+						  
+						</form>
+					</div>
+				</div>
+			</div>
+			
+
 		</div>
 
+
 		<div class = "sec-container">
+			<div class = "house-img"><img src="img/house.png"></div>
+			<div class = "container-fluid col-sm-10 col-sm-offset-1" id = "budget-container">
+				<form class="form-horizontal col-sm-6 col-sm-offset-3" role="form" id = "budget-form">
+					<!-- <div>算算看你的預算能買哪裡的房子！</div> -->
+
+					  
+
+					  <div class="form-group">
+					    <label for="budget-budgetpermonth" class="col-sm-5 control-label">每個月的房貸支出(元)</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="budget-budgetpermonth" placeholder="輸入每個月的房貸支出(元)">
+					    </div>
+					  </div>
+					
+					  <div class="form-group">
+					    <label for="budget-loanlimit" class="col-sm-5 control-label">貸款成數(%)</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="budget-loanlimit" placeholder="輸入貸款成數(%)">
+					    </div>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="budget-loantime" class="col-sm-5 control-label">房貸年限</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="budget-loantime" placeholder="輸入房貸年限">
+					    </div>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="budget-loanrate" class="col-sm-5 control-label">房貸利率(%)</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="budget-loanrate" placeholder="輸入房貸利率(%)">
+					    </div>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="budget-square" class="col-sm-5 control-label">想居住的房屋坪數(坪)</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="budget-square" placeholder="輸入想居住的房屋坪數(坪)">
+					    </div>
+					  </div>
+
+					  <div class="form-group">
+					  	<label for="dropdownMenu-budget" class="col-sm-5 control-label">地區</label>
+					  	<div class="dropdown col-sm-7">
+						  <button class="btn btn-default dropdown-toggle col-sm-12" type="button" id="dropdownMenu-budget" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    縣市
+						    <span><img src="img/popdown.png"></span>
+						  </button>
+						  <ul class="dropdown-menu dropdown-budget" aria-labelledby="dropdownMenu-budget">
+						    <!-- <li><a href="#">Action</a></li>
+						    <li><a href="#">Another action</a></li>
+						    <li><a href="#">Something else here</a></li>
+						    <li><a href="#">Separated link</a></li> -->
+						  </ul>
+						</div>
+					  </div>
+
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					      <button class="btn btn-default calculate-btn" id = "cal-btn-budget">立即試算</button>
+					    </div>
+					  </div>
+
+					  
+				</form>
+				
+			</div>
+			<div class = "container-fluid col-sm-10 col-sm-offset-1" id = "budget-result-container">
+				<div class = "col-sm-6 col-sm-offset-3" id = "budget-result">afaewwwwwwwwwwww</div>
+			</div>
+
+		</div>
+
+		<!-- <div class = "sec-container">
 			<div id = "taipei-equalrent-chart"></div>
-		</div>
+		</div> -->
 		
 	</div>
 
