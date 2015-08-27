@@ -74,8 +74,16 @@
 	</div>
 
 	<div class = "container">
-		
+
 		<div class = "sec-container">
+			<div class = "sec-mid-title myfont mid-title font-bold">買房VS.租房 支出比一比</div>
+			<div class = "sec-content myfont content-text">台北市房價高不可攀，現在的年輕人想在台北買房，已是遙不可及的夢想，大多選擇當租屋族，不被沉重的房貸綁架。但是在市區租屋成本也不低，長期下來真的划算嗎？數學專欄作家賴以威推算公式，利用案例分析，比較買房和租房支出。</div>
+			<div class = "sec-sm-title myfont sm-title font-bold">萬華區買房和租房，20年後哪個划算？</div>
+			<div class = "sec-content myfont content-text">35歲的大仁與小君結婚3年，因為工作關係，在台北市萬華區租屋，30坪房屋每月租金約30000元。長輩勸他們不如買房比較划算，兩人努力存錢，加上長輩資助，手上約有400萬元的自備款，以實價登錄萬華區目前每坪房價約42.46萬元估算，30坪房屋總價約1273.8萬元。若同樣以居住20年計算，究竟買房和租房哪種選擇比較划算？</div>
+		</div>
+		
+		<div class = "sec-container" id = "rent-buy-calculator">
+			<div class = "insert-value-notice">可自行輸入數值試算</div>
 			<div class = "house-img"><img src="img/house.png"></div>
 			<form class="form-horizontal" role="form" id = "buy-form">
 				<div class = "sm-title myfont font-bold blue-font">買房</div>
@@ -313,7 +321,7 @@
 				<div class = "myfont font-bold" id = "rent-buy-compare-text">買房比租房多花</div>
 				<div class = "myfont font-bold" id = "rent-buy-compare-num">$97388</div>
 				<div id = "rent-buy-compare-img"><img src="img/rent_better.png"></div>
-				<div class = "calculate-results">
+				<div class = "calculate-results col-sm-12">
 					<div class = "result-container fl-left" id = "buy-result">
 						<form class="form-horizontal" role="form">
 							<div class="form-group">
@@ -415,13 +423,27 @@
 						</form>
 					</div>
 				</div>
+				<div id = "rent-buy-ps">
+					註：房屋保險不計、房屋維修與房貸抵稅假定抵銷。<br>
+					各行政區房價資料來源：內政部不動產成交案件實際資訊資料供應系統<br>
+					House 123整理提供，最新資料更新至2015年6月。<br>
+					本資料僅供參考，實際資料仍以內政部不動產交易實價查詢服務網為主。<br>
+				</div>
 			</div>
 			
 
 		</div>
 
-
 		<div class = "sec-container">
+			<div class = "sec-mid-title myfont mid-title font-bold">你的薪水可以在哪裡買房？</div>
+			<div class = "sec-content myfont content-text">根據《好房網》今年5月針對「買房好，還是租房好？」進行調查，有73%民眾認為買房比較好，顯示儘管房價高漲，絕大多數人仍想買房。但對薪水不高的年輕人來說，哪些地區的房子是他們負擔得起的？以下利用實價登錄全台各區每坪房價推算，建議你合適的購屋地點。</div>
+			<div class = "sec-sm-title myfont sm-title font-bold">雙薪家庭月入9萬元，買得起新北市哪些地區？</div>
+			<div class = "sec-content myfont content-text">以大仁和小君的例子分析，根據上面試算結果，以20年為期，在台北市萬華區買房比租房划算，不過買房還必須考量家庭的房貸負擔能力。<br><br>大仁和小君兩人每個月薪水加起來約9萬元，以一般建議每月房貸支出不超過家庭收入的1/3為原則，每個月可負擔3萬元房貸。以貸款成數70%、貸款年限20年、年利率2%計算，總價多少錢以下的房屋適合他們購買？若考慮到房價較低的新北市買30坪的房屋，哪些地區符合他們的預算？</div>
+		</div>
+
+
+		<div class = "sec-container" id = "budget-calculator">
+			<div class = "insert-value-notice" id = "budget-notice">可自行輸入數值試算</div>
 			<div class = "house-img"><img src="img/house.png"></div>
 			<div class = "container-fluid col-sm-10 col-sm-offset-1" id = "budget-container">
 				<form class="form-horizontal col-sm-6 col-sm-offset-3" role="form" id = "budget-form">
@@ -504,6 +526,37 @@
 		<!-- <div class = "sec-container">
 			<div id = "taipei-equalrent-chart"></div>
 		</div> -->
+
+		<div class = "sec-container">
+			<div class = "sec-mid-title myfont mid-title font-bold">買房好難 雙北購屋痛苦指數破表</div>
+			<div class = "static-chart"><img src="img/income_loan.jpg"></div>
+			<div class = "sec-content myfont content-text">
+				根據上面試算結果，以大仁和小君的薪水和房貸負擔能力，很難在台北市和新北市區買到心目中理想的房子。新北市較外圍的郊區（樹林、淡水、八里、三峽等）可符合他們的購屋預算，但必須考慮交通、生活機能等其他因素。顯示目前年輕家庭想在雙北地區買房仍相當困難。<br><br>根據內政部營建署2015年第1季統計資料，六都中除了桃園市以外，房價所得比和房貸負擔率皆創下2002年有統計以來新高。台北市房價所得比達16.16倍，表示民眾要不吃不喝16.16年才能在台北市買的起房；台北市房貸負擔率達68.63%，等於房貸占每月家戶所得近7成，這兩項購屋痛苦指標均為全國最高。<br><br>細看各縣市房貸負擔率數據，除了台北市達近7成外，新北市也上升至55.27%，代表在新北市貸款購屋，必須付出每月家庭可支配所得一半以上繳房貸，大幅超過合理的貸款負擔率30%。而一般認為合理的房價所得比為3到5倍。<br><br>
+				對此，政大地政系教授張金鶚表示，因為房價所得比和房貸負擔率計算取的是中位數房價和家戶可支配所得中位數，可能因為樣本數不同出現落差，例如調查當季剛好出現總價較高的豪宅交易，就會造成中位數房價偏高。<br><br>德明財經科技大學副教授花敬群也指出，房價所得比創新高並不代表房價還在上漲。不過，可看出雙北地區現在房價仍超過一般家庭的合理負擔範圍。
+			</div>
+		</div>
+
+		<div class = "sec-container">
+			<div class = "sec-mid-title myfont mid-title font-bold">薪資凍漲15年 房價飆升3.5倍</div>
+			<div class = "static-chart"><img src="img/income_houseprice.jpg"></div>
+			<div class = "sec-content myfont content-text">
+				房價飆漲，實質薪資卻倒退，是年輕人買不起房的關鍵原因。根據主計總處統計2015年1到5月上班族經常實質性薪資3萬7489元，雖然是近6年新高，卻仍未回到2009年金融海嘯前水準，更比2000年的3萬7805元還低。反觀台北市房價從2000年平均單價25.7萬元，漲到2015年第2季的90.1萬元，薪資凍漲15年，房價卻飆漲3.5倍，買房難上加難。<br><br>
+				觀察近15年台北市房價變化，2000年台北市預售屋或新成屋平均單價25.7萬元，在台北市買30坪的房子，總價只要771萬元，以當年上班族每月實質經常性薪資3萬7805元計算，購屋者不吃不喝17年可付完貸款。<br><br>如果現在想在台北市買30坪的房子，以2015年第2季平均單價90.1萬元計算，總價要2703萬元，今年1到5月上班族每月實質經常性薪資3萬7489元，購屋者必須花60.1年才能還完貸款，等於比15年前多花43.1年的薪水，才買得到相近的居住空間。
+			</div>
+		</div>
+
+		<div class = "sec-container">
+			<div class = "sec-mid-title myfont mid-title font-bold">量縮價鬆動 現在是買房時機嗎？</div>
+			<div class = "static-chart"><div id = "trading-houseprice-chart"></div></div>
+			<div class = "sec-content myfont content-text">
+				政府打房、市場力量發酵，房市成交量急凍。觀察2013年到2015年第2季建物買賣移轉棟數，台北、新北、桃園、台中和高雄皆呈現下滑趨勢。以台北市來看，最高點落在2013年第2季的1萬846棟，之後開始衰退，今年第2季跌至6583棟，比去年同期下跌2成以上。新北、桃園跌幅也都超過2成，台中、高雄下滑逾1成，顯示整體房市交易進入冰河期。<br><br>政府自2010年起頻頻出招打房，市場在預期心理下，成交量萎縮，民眾最關心的房價也開始出現鬆動，根據信義房價指數，台北市今年第2季房價指數為289.6，季減幅4.1%、年減6.6%。新北和桃園今年第2季與前季水準相當，但都比去年同期微幅衰退，顯示北台灣房價已開始回跌。<br><br>
+				政大地政系教授張金鶚表示，現在房市已開始往合理的方向調整，量縮之後再來價跌，從市場景氣循環來看，這一波漲勢從2003年SARS低谷到去年，漲了11年，現在房市開始向下走，預估收縮期也不會太短，至少連跌5到7年、跌幅2到3成。<br><br>
+				房價看跌，對自住客來說，現在是買點嗎？德明財經科技大學副教授花敬群分析，從去年下半年開始房價已呈現緩跌趨勢，預估未來5年房價都會下跌，因此現階段「等待是最好的購屋策略」，想買房的民眾可再觀望一陣子。<br><br>
+				住展雜誌企研室經理何世昌則認為，要看個人購屋需求和負擔能力，因為很難預測房價何時會探底，建議自住客若資金足夠，現在就可開始看屋。負擔能力不足的民眾，可先以租代買。<br><br>
+				信義房屋企研室經理曾敬德也表示，要看民眾心態，若是有自住需求，現在時機點比過去一年好，因不景氣建商好議價，民眾相對好買好挑。若有看到合適物件、且價格比之前划算，便可考慮進場。
+
+			</div>
+		</div>
 		
 	</div>
 

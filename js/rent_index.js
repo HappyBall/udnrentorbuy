@@ -478,7 +478,9 @@ $(document).ready(function(){
 
 				$("#budget-result").html("採本息平均攤還法<br>推算可購買的房屋總價為<span class = 'budget-big-font'>" + Math.round(house_price) + "元</span><br>可貸款金額為<span class = 'budget-big-font'>" + Math.round(loan) + "元</span><br>須準備自備款<span class = 'budget-big-font'>" + Math.round(firstPay) + "元</span><br>若想住" + budget_object['square'] + "坪的房屋，估算每坪單價約<span class = 'budget-big-font'>" + Math.round(pricePerSquare) + "元</span><br><br>" + city_chose_budget + "每坪單價在" + Math.round(pricePerSquare) + "元以下的地區：<br>" + distsStr + "..." );
 
+				$("#budget-result-container").css("display", "table");
 			}
+
 
 			return false;
 		});
@@ -554,6 +556,105 @@ $(document).ready(function(){
 	        series: data_equal_rent
 	    });
 	});
+
+	$('#trading-houseprice-chart').highcharts({
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: null
+        },
+        
+        xAxis: [{
+            categories: ['2000年', '2001年', '2002年', '2003年', '2004年', '2005年', '2006年', '2007年', '2008年', '2009年', '2010年', '2011年', '2012年', '2013年', '2014年', '2015年'],
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}萬',
+               style: {
+                    color:'#4D4D4D',
+                }
+            },
+            title: {
+                text: '萬元',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: '元',
+                 style: {
+                    color:'#00ABC7',
+                }
+            },
+            labels: {
+                format: '{value} ',
+                style: {
+                    color:'#00ABC7',
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+             reversed: true,
+            borderWidth: 0,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        credits:{enabled:false},
+        series: [{
+            name: '以100年價格衡量之實質經常性薪資(元)',
+            type: 'column',
+            color: '#00ABC7',
+            yAxis: 1,
+            data: [37805, 38179,
+				38771,
+				38702,
+				38880,
+				38497,
+				38313,
+				38558,
+				37733,
+				36471,
+				36778,
+				36719,
+				36854,
+				36593,
+				36685,
+				37489],
+            tooltip: {
+                valueSuffix: '元'
+            }
+
+        }, {
+            name: '台北市預售/新成屋房價(萬元/坪)',
+            type: 'spline',
+            color: '#4D4D4D',
+            data: [25.7,
+				33.1,
+				33.2,
+				35.1,
+				37,
+				38.1,
+				44.7,
+				52.9,
+				57,
+				53.2,
+				65.2,
+				68.5,
+				74.1,
+				84,
+				91.2,
+				90.1],
+            tooltip: {
+                valueSuffix: '萬元'
+            }
+        }]
+    });
 
 });
 
