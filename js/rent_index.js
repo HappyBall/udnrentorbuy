@@ -9,6 +9,8 @@ var budget_object = {};
 var investreturn = 0;
 var currencyinflat = 0;
 var actual_invest_return = 0;
+var tips_dict = {};
+var tip_selected = "";
 
 var taiperDistsList = ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"];
 
@@ -24,8 +26,48 @@ $(document).ready(function(){
 	$("#first-cover").height($(window).height());
 
 	rentObjectInit();
+	buyObjectInit();
+	budgetObjectInit();
 
 	// console.log(rent_object);
+
+	d3.csv("data/tips.csv", function(data_tips){
+		for (var i in data_tips){
+			var temp = {};
+			temp['title'] = data_tips[i]['title'];
+			temp['content'] = data_tips[i]['content'];
+
+			tips_dict[data_tips[i]['key']] = temp;
+		}
+
+		// console.log(tips_dict);
+
+		$(".question-mark").click(function(){
+			if($(this).attr("id") != tip_selected){
+
+				var key = $(this).attr("id").split("-")[1];
+
+				if($(this).parent().attr("for").split("-")[0] == "rent"){
+
+					$("#rent-tip-title").html(tips_dict[key]['title']);
+					$("#rent-tip-content").html(tips_dict[key]['content']);
+					$("#rent-tip-block").css("display", "table");
+				}
+				else{
+					$("#buy-tip-title").html(tips_dict[key]['title']);
+					$("#buy-tip-content").html(tips_dict[key]['content']);
+					$("#buy-tip-block").css("display", "table");
+				}
+
+				$("#" + tip_selected).css("opacity", 0.5);
+				$(this).css("opacity", 1);
+
+				tip_selected = $(this).attr("id");
+			}
+		});
+
+
+	});
 
 	d3.csv("data/city_dist_avgmoney_real.csv", function(data_avgmoney){
 		// console.log(data_avgmoney);
@@ -46,7 +88,7 @@ $(document).ready(function(){
 		}
 
 		$(".dropdown-budget li").click(function(){
-			var city_clicked = $(this).find("a").text();
+			var city_clicked = $(this).find(" a").text();
 
 			if(city_clicked != city_chose_budget){
 				$("#dropdownMenu-budget").html(city_clicked + "<span><img src='img/popdown.png'></span>");
@@ -170,12 +212,18 @@ $(document).ready(function(){
 			var totalLoan = 0, loanPerYear = 0, loanPerMonth = 0;
 
 			if(buy_object['loanrate'] == 0){
-				loanPerMonth = loan/(buy_object['loantime']*12)
+				if(buy_object['loantime'] == 0) 
+					loanPerMonth = 0;
+				else
+					loanPerMonth = loan/(buy_object['loantime']*12);
 				loanPerYear = loanPerMonth*12;
 				totalLoan = loan;
 			}
 			else{
-				loanPerMonth = (loan * loanMonthRate) / (1 - Math.pow(1 + loanMonthRate, buy_object['loantime']*(-12)));
+				if(buy_object['loantime'] == 0) 
+					loanPerMonth = 0;
+				else
+					loanPerMonth = (loan * loanMonthRate) / (1 - Math.pow(1 + loanMonthRate, buy_object['loantime']*(-12)));
 				loanPerYear = loanPerMonth * 12;
 				totalLoan = loanPerYear * Math.min(buy_object['time'], buy_object['loantime']);
 			}
@@ -232,6 +280,22 @@ $(document).ready(function(){
 			//calculate total cost
 			var totalCost_rent = initCost_rent + initCostOppo_rent + totalMoney_rent + totalMoneyOppo_rent - depositBack_rent;
 			$("#rent-totalcost").text("$" + Math.round(totalCost_rent) );
+
+			if(totalCost > totalCost_rent){
+				$("#rent-buy-compare-text").text("買房比租房多花");
+				$("#rent-buy-compare-num").html("$" + (totalCost - totalCost_rent));
+				$("#rent-buy-compare-img img").attr("src", "img/rent_better.png");
+				$("#buy-check-img img").attr("src", "img/uncheck.png");
+				$("#rent-check-img img").attr("src", "img/check.png");
+			}
+
+			else{
+				$("#rent-buy-compare-text").text("租房比買房多花");
+				$("#rent-buy-compare-num").html("$" + (totalCost_rent - totalCost));
+				$("#rent-buy-compare-img img").attr("src", "img/buy_better.png");
+				$("#buy-check-img img").attr("src", "img/check.png");
+				$("#rent-check-img img").attr("src", "img/uncheck.png");
+			}
 
 			$("#rent-buy-result-container").css("display", "table");
 
@@ -347,9 +411,8 @@ $(document).ready(function(){
 		$("#cal-btn-budget").click(function(){
 			budgetObjectInit();
 
-			if (city_chose_budget == "")
-				alert("請選擇想居住的縣市!");
-			else if(budget_object['budgetpermonth'] == 0)
+			
+			if(budget_object['budgetpermonth'] == 0)
 				alert("請輸入正確房貸支出!（不能為0）");
 			else if(budget_object['loanlimit'] == 0 || budget_object['loanlimit'] > 100)
 				alert("請輸入正確貸款成數!（不能為0也不能超過100）");
@@ -357,6 +420,8 @@ $(document).ready(function(){
 				alert("請輸入正確房貸年限!（不能為0）");
 			else if(budget_object['square'] == 0)
 				alert("請輸入正確房屋坪數!（不能為0）");
+			else if (city_chose_budget == "")
+				alert("請選擇想居住的縣市!");
 			else{
 				updateInputValuesBudget();
 
@@ -373,7 +438,7 @@ $(document).ready(function(){
 
 				var pricePerSquare = house_price / budget_object['square'];
 
-				console.log(pricePerSquare);
+				// console.log(pricePerSquare);
 
 				var distsArr = [];
 
@@ -409,9 +474,9 @@ $(document).ready(function(){
 				console.log(distsStr);
 
 				if(distsStr.length == 0)
-					distsStr = "沒有符合的區域";
+					distsStr = "沒有符合的地區";
 
-				$("#budget-result").html("採本息平均攤還法<br>推算可購買的房屋總價為" + house_price + "元<br>可貸款金額為" + loan + "元，須準備自備款" + firstPay + "元<br>若想住" + budget_object['square'] + "坪的房屋，估算每坪單價約" + pricePerSquare + "元<br>依所選縣市可居住的區域為：" + distsStr + "。" );
+				$("#budget-result").html("採本息平均攤還法<br>推算可購買的房屋總價為<span class = 'budget-big-font'>" + Math.round(house_price) + "元</span><br>可貸款金額為<span class = 'budget-big-font'>" + Math.round(loan) + "元</span><br>須準備自備款<span class = 'budget-big-font'>" + Math.round(firstPay) + "元</span><br>若想住" + budget_object['square'] + "坪的房屋，估算每坪單價約<span class = 'budget-big-font'>" + Math.round(pricePerSquare) + "元</span><br><br>" + city_chose_budget + "每坪單價在" + Math.round(pricePerSquare) + "元以下的地區：<br>" + distsStr + "..." );
 
 			}
 
@@ -543,7 +608,7 @@ function updateInputValuesBuy(){
 	$("#buy-houseinflat").val(buy_object['inflat']*100 + " %");
 	$("#buy-buyfee").val(buy_object['buyfee']*100 + " %");
 	$("#buy-sellfee").val(buy_object['sellfee']*100 + " %");
-	$("#buy-housetax").val(buy_object['housetax']*100 + " %");
+	$("#buy-housetax").val(Math.round(buy_object['housetax']*100*100)/100 + " %");
 }
 
 function updateInputValuesBudget(){

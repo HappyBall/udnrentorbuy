@@ -1,11 +1,24 @@
-body{
+html,body{
 	/*padding-top: 100px;*/
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+label{
+	font-size: 17px;
+	font-family: 微軟正黑體;
 }
 
 #first-cover{
 	/*height: 100%;*/
-	/*background-color: #00abc7;*/
+	background-color: #00abc7;
 	padding: 0;
+	width: 100%;
+}
+
+.question-mark{
+	width: 20px;
+	opacity: 0.5;
 }
 
 
@@ -101,6 +114,29 @@ body{
 	padding-bottom: 20px;
 }
 
+.tip-block{
+	display: none;
+	font-size: 17px;
+	font-family: 微軟正黑體;
+	line-height: 25px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-top: 30px;
+	background-color: rgba(0,171,199,0.15);
+}
+
+.tip-title-block{
+	display: table;
+}
+
+.calculate-results{
+	font-size: 17px;
+}
+
+.check-text{
+	margin-top: 15px;
+}
+
 .result-container{
 	width: 50%;
 	padding-left: 15%;
@@ -132,6 +168,25 @@ body{
 	background-color: rgba(0,171,199,0.15);
 	padding-top: 20px;
 	padding-bottom: 20px;
+}
+
+#budget-result-container{
+	background-color: rgba(230,230,230,0.15);
+	height: 375px;
+	padding-top: 40px;
+}
+
+#budget-result{
+	font-family: 微軟正黑體;
+	font-size: 20px;
+}
+
+.budget-big-font{
+	font-family: 微軟正黑體;
+	font-size: 25px;
+	font-weight: bold;
+	color: #00abc7;
+	margin-left: 5px;
 }
 
 #budget-form{
