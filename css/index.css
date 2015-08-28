@@ -2,6 +2,7 @@ html,body{
 	/*padding-top: 100px;*/
 	max-width: 100%;
 	overflow-x: hidden;
+	padding-bottom: 100px;
 }
 
 label{
@@ -16,21 +17,33 @@ label{
 	width: 100%;
 }
 
+#fore-words{
+	font-size: 21px;
+	color: #808080;
+	padding-left: 30px;
+	border-left: 2px solid #808080;
+}
+
 .question-mark{
 	width: 20px;
 	opacity: 0.5;
 }
 
-
-
-.sec-container{
-	width: 100%;
-	display: table;
-	margin-top: 50px;
+.horizontal-line{
+	height: 1px;
+	background-color: #808080
 }
 
+.sec-container{
+	width: 80%;
+	display: table;
+	margin: 80px auto;
+}
+
+
+
 .sec-content{
-	margin-top: 20px;
+	margin-top: 30px;
 }
 
 .sec-sm-title{
@@ -59,7 +72,7 @@ label{
 }
 
 .static-chart{
-	
+	margin-top: 50px;
 }
 
 .myfont{
@@ -76,10 +89,12 @@ label{
 
 #rent-buy-calculator{
 	position: relative;
+	width: 100%;
 }
 
 #budget-calculator{
 	position: relative;
+	width: 100%;
 }
 
 .insert-value-notice{
@@ -248,4 +263,23 @@ label{
 	font-size: 30px;
 	color: #00abc7;
 	border-radius: 10px;
+}
+
+.static-chart img{
+	display: table;
+	margin: auto;
+}
+
+.nav-option{
+	font-size: 22px;
+	font-family: 微軟正黑體;
+	margin-left: 20px;
+	margin-right: 20px;
+	cursor: pointer;
+}
+
+.ps{
+	font-family: 微軟正黑體;
+	font-size: 17px;
+	color: #808080;
 }

@@ -11,6 +11,7 @@ var currencyinflat = 0;
 var actual_invest_return = 0;
 var tips_dict = {};
 var tip_selected = "";
+// var city_clicked = "";
 
 var taiperDistsList = ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"];
 
@@ -25,9 +26,7 @@ $(document).ready(function(){
 
 	$("#first-cover").height($(window).height());
 
-	rentObjectInit();
-	buyObjectInit();
-	budgetObjectInit();
+	
 
 	// console.log(rent_object);
 
@@ -42,7 +41,7 @@ $(document).ready(function(){
 
 		// console.log(tips_dict);
 
-		$(".question-mark").click(function(){
+		$(".question-mark").on("mouseover", function(){
 			if($(this).attr("id") != tip_selected){
 
 				var key = $(this).attr("id").split("-")[1];
@@ -79,6 +78,12 @@ $(document).ready(function(){
 
 			city_dict[data_avgmoney[i]['city']][data_avgmoney[i]['dist']] = data_avgmoney[i]['avg-square-money'];
 		}
+
+		initAllValues();
+
+		rentObjectInit();
+		buyObjectInit();
+		budgetObjectInit();
 
 		// console.log(city_dict);
 		for (var i in Object.keys(city_dict)){
@@ -205,7 +210,7 @@ $(document).ready(function(){
 
 			//calculate buy init cost
 			var initCost = firstPay + buyfee;
-			$("#buy-initcost").text("$" + Math.round(initCost));
+			$("#buy-initcost").text("$" + thousandComma(Math.round(initCost)));
 
 			//calculate buy total loan
 
@@ -227,11 +232,11 @@ $(document).ready(function(){
 				loanPerYear = loanPerMonth * 12;
 				totalLoan = loanPerYear * Math.min(buy_object['time'], buy_object['loantime']);
 			}
-			$("#buy-totalloan").text("$" + Math.round(totalLoan));
+			$("#buy-totalloan").text("$" + thousandComma(Math.round(totalLoan)));
 
 			//calculate buy total tax
 			var totalTax = buy_object['money'] * buy_object['housetax'] * buy_object['time'];
-			$("#buy-totaltax").text("$" + Math.round(totalTax));
+			$("#buy-totaltax").text("$" + thousandComma(Math.round(totalTax)));
 
 			//calculate buy oppotunity cost
 			var initCostOppo = initCost*Math.pow(1+actual_invest_return, buy_object['time']) - initCost;
@@ -242,7 +247,7 @@ $(document).ready(function(){
 			else
 				var loanOppo = calculateGeoSeries(1 + actual_invest_return, buy_object['loantime'], loanPerYear * Math.pow(1+actual_invest_return, buy_object['time'] - buy_object['loantime'])) - loanPerYear * Math.min((buy_object['time'] - 1), buy_object['loantime']);
 
-			$("#buy-oppotunitycost").text("$" + Math.round(initCostOppo + taxOppo + loanOppo));
+			$("#buy-oppotunitycost").text("$" + thousandComma(Math.round(initCostOppo + taxOppo + loanOppo)));
 
 			//calculate buy sell balance
 			var sellPrice = buy_object['money'] * Math.pow(1+buy_object['inflat'], buy_object['time']);
@@ -254,36 +259,36 @@ $(document).ready(function(){
 				loanleft = Math.max(0, loan*Math.pow(1+loanMonthRate, buy_object['time']*12) - loanPerMonth*(Math.pow(1+loanMonthRate, buy_object['time']*12) - 1)/loanMonthRate);
 
 			var sellBalance = sellPrice*(1 - buy_object['sellfee']) - loanleft;
-			$("#buy-sellbalance").text("$" + Math.round(sellBalance));
+			$("#buy-sellbalance").text("- $" + thousandComma(Math.round(sellBalance)));
 
 			//calculate total cost
 			var totalCost = initCost + totalTax + totalLoan + (initCostOppo + taxOppo + loanOppo) - sellBalance;
-			$("#buy-totalcost").text("$" + Math.round(totalCost) );
+			$("#buy-totalcost").text("$" + thousandComma(Math.round(totalCost)) );
 
 			//calculate rent init cost
 			var initCost_rent = rent_object['money'] * (rent_object['deposit'] + rent_object['fee']);
-			$("#rent-initcost").text("$" + Math.round(initCost_rent));
+			$("#rent-initcost").text("$" + thousandComma(Math.round(initCost_rent)));
 
 			//calculate rent total money 
 			var totalMoney_rent = calculateGeoSeries(1+rent_object['inflat'], rent_object['time'], rent_object['money']*12);
-			$("#rent-totalmoney").text("$" + Math.round(totalMoney_rent) );
+			$("#rent-totalmoney").text("$" + thousandComma(Math.round(totalMoney_rent)) );
 
 			//calculate rent oppotunity cost
 			var initCostOppo_rent = initCost_rent * (Math.pow(1+actual_invest_return, rent_object['time']) - 1);
 			var totalMoneyOppo_rent = calculateGeoSeries( (1+actual_invest_return)/(1+rent_object['inflat']), rent_object['time'], rent_object['money']*12*Math.pow(1+rent_object['inflat'], rent_object['time'] - 1)) - totalMoney_rent;
-			$("#rent-oppotunitycost").text("$" + Math.round(totalMoneyOppo_rent + initCostOppo_rent) );
+			$("#rent-oppotunitycost").text("$" + thousandComma(Math.round(totalMoneyOppo_rent + initCostOppo_rent)) );
 
 			//calculate rent deposit back
 			var depositBack_rent = rent_object['money'] * rent_object['deposit'];
-			$("#rent-depositback").text("$" + Math.round(depositBack_rent) );
+			$("#rent-depositback").text("- $" + thousandComma(Math.round(depositBack_rent)) );
 
 			//calculate total cost
 			var totalCost_rent = initCost_rent + initCostOppo_rent + totalMoney_rent + totalMoneyOppo_rent - depositBack_rent;
-			$("#rent-totalcost").text("$" + Math.round(totalCost_rent) );
+			$("#rent-totalcost").text("$" + thousandComma(Math.round(totalCost_rent)) );
 
 			if(totalCost > totalCost_rent){
 				$("#rent-buy-compare-text").text("買房比租房多花");
-				$("#rent-buy-compare-num").html("$" + (totalCost - totalCost_rent));
+				$("#rent-buy-compare-num").html("$" + thousandComma(Math.round(totalCost - totalCost_rent)));
 				$("#rent-buy-compare-img img").attr("src", "img/rent_better.png");
 				$("#buy-check-img img").attr("src", "img/uncheck.png");
 				$("#rent-check-img img").attr("src", "img/check.png");
@@ -291,7 +296,7 @@ $(document).ready(function(){
 
 			else{
 				$("#rent-buy-compare-text").text("租房比買房多花");
-				$("#rent-buy-compare-num").html("$" + (totalCost_rent - totalCost));
+				$("#rent-buy-compare-num").html("$" + thousandComma(Math.round(totalCost_rent - totalCost)));
 				$("#rent-buy-compare-img img").attr("src", "img/buy_better.png");
 				$("#buy-check-img img").attr("src", "img/check.png");
 				$("#rent-check-img img").attr("src", "img/uncheck.png");
@@ -476,7 +481,7 @@ $(document).ready(function(){
 				if(distsStr.length == 0)
 					distsStr = "沒有符合的地區";
 
-				$("#budget-result").html("採本息平均攤還法<br>推算可購買的房屋總價為<span class = 'budget-big-font'>" + Math.round(house_price) + "元</span><br>可貸款金額為<span class = 'budget-big-font'>" + Math.round(loan) + "元</span><br>須準備自備款<span class = 'budget-big-font'>" + Math.round(firstPay) + "元</span><br>若想住" + budget_object['square'] + "坪的房屋，估算每坪單價約<span class = 'budget-big-font'>" + Math.round(pricePerSquare) + "元</span><br><br>" + city_chose_budget + "每坪單價在" + Math.round(pricePerSquare) + "元以下的地區：<br>" + distsStr + "..." );
+				$("#budget-result").html("採本息平均攤還法<br>推算可購買的房屋總價為<span class = 'budget-big-font'>" + thousandComma(Math.round(house_price)) + "元</span><br>可貸款金額為<span class = 'budget-big-font'>" + thousandComma(Math.round(loan)) + "元</span><br>須準備自備款<span class = 'budget-big-font'>" + thousandComma(Math.round(firstPay)) + "元</span><br>若想住" + budget_object['square'] + "坪的房屋，估算每坪單價約<span class = 'budget-big-font'>" + thousandComma(Math.round(pricePerSquare)) + "元</span><br><br>" + city_chose_budget + "每坪單價在" + thousandComma(Math.round(pricePerSquare)) + "元以下的地區：<br>" + distsStr + "..." );
 
 				$("#budget-result-container").css("display", "table");
 			}
@@ -562,35 +567,41 @@ $(document).ready(function(){
             zoomType: 'xy'
         },
         title: {
-            text: null
+            text: '台北市<br>建物買賣交易量與信義房價指數變化'
         },
         
         xAxis: [{
-            categories: ['2000年', '2001年', '2002年', '2003年', '2004年', '2005年', '2006年', '2007年', '2008年', '2009年', '2010年', '2011年', '2012年', '2013年', '2014年', '2015年'],
+            categories: ['2013Q1',	'2013Q2',	'2013Q3',	'2013Q4',	'2014Q1',	'2014Q2',	'2014Q3',	'2014Q4',	'2015Q1',	'2015Q2'],
             crosshair: true
         }],
         yAxis: [{ // Primary yAxis
+           
             labels: {
-                format: '{value}萬',
+                format: '{value}',
+                
                style: {
                     color:'#4D4D4D',
                 }
             },
             title: {
-                text: '萬元',
+                text: '',
+               
                 style: {
                     color: Highcharts.getOptions().colors[1]
                 }
             }
         }, { // Secondary yAxis
+       
             title: {
-                text: '元',
+                text: '棟',
+               
                  style: {
                     color:'#00ABC7',
                 }
             },
             labels: {
                 format: '{value} ',
+               
                 style: {
                     color:'#00ABC7',
                 }
@@ -607,51 +618,31 @@ $(document).ready(function(){
         },
         credits:{enabled:false},
         series: [{
-            name: '以100年價格衡量之實質經常性薪資(元)',
+            name: '建物買賣交易量',
             type: 'column',
             color: '#00ABC7',
             yAxis: 1,
-            data: [37805, 38179,
-				38771,
-				38702,
-				38880,
-				38497,
-				38313,
-				38558,
-				37733,
-				36471,
-				36778,
-				36719,
-				36854,
-				36593,
-				36685,
-				37489],
+            data: [9201,	10846,	9918,	9531,	8214,	8480,	7510,	7819,	6478,	6583],
             tooltip: {
-                valueSuffix: '元'
+                valueSuffix: '棟'
             }
 
         }, {
-            name: '台北市預售/新成屋房價(萬元/坪)',
+            name: '信義房價指數',
             type: 'spline',
             color: '#4D4D4D',
-            data: [25.7,
-				33.1,
-				33.2,
-				35.1,
-				37,
-				38.1,
-				44.7,
-				52.9,
-				57,
-				53.2,
-				65.2,
-				68.5,
-				74.1,
-				84,
-				91.2,
-				90.1],
+            data: [284.55,
+				292.94,
+				294.89,
+				304.85,
+				298.5,
+				310.2,
+				297.45,
+				294.26,
+				302.06,
+				289.6],
             tooltip: {
-                valueSuffix: '萬元'
+                valueSuffix: ''
             }
         }]
     });
@@ -691,37 +682,77 @@ function budgetObjectInit(){
 
 function updateInputValuesRent(){
 	// $("#rent-square").val(rent_object['square'] + " 坪");
-	$("#rent-money").val(rent_object['money'] + " 元");
-	$("#rent-time").val(rent_object['time'] + " 年");
-	$("#rent-deposit").val(rent_object['deposit'] + " 個月");
-	$("#rent-inflat").val(rent_object['inflat']*100 + " %");
-	$("#rent-agentfee").val(rent_object['fee']*100 + " %");
+	$("#rent-money").val(rent_object['money'] );
+	$("#rent-time").val(rent_object['time'] );
+	$("#rent-deposit").val(rent_object['deposit'] );
+	$("#rent-inflat").val(rent_object['inflat']*100 );
+	$("#rent-agentfee").val(rent_object['fee']*100 );
 	// $("#rent-investreturn").val(rent_object['investreturn'] + " %");
 }
 
 function updateInputValuesBuy(){
-	$("#buy-square").val(buy_object['square'] + " 坪");
-	$("#buy-money").val(buy_object['money'] + " 元");
-	$("#buy-time").val(buy_object['time'] + " 年");
-	$("#buy-loanlimit").val(buy_object['loanlimit']*100 + " %");
-	$("#buy-loantime").val(buy_object['loantime'] + " 年");
-	$("#buy-loanrate").val(buy_object['loanrate']*100 + " %");
-	$("#buy-houseinflat").val(buy_object['inflat']*100 + " %");
-	$("#buy-buyfee").val(buy_object['buyfee']*100 + " %");
-	$("#buy-sellfee").val(buy_object['sellfee']*100 + " %");
-	$("#buy-housetax").val(Math.round(buy_object['housetax']*100*100)/100 + " %");
+	$("#buy-square").val(buy_object['square'] );
+	$("#buy-money").val(buy_object['money'] );
+	$("#buy-time").val(buy_object['time'] );
+	$("#buy-loanlimit").val(buy_object['loanlimit']*100 );
+	$("#buy-loantime").val(buy_object['loantime'] );
+	$("#buy-loanrate").val(buy_object['loanrate']*100 );
+	$("#buy-houseinflat").val(buy_object['inflat']*100 );
+	$("#buy-buyfee").val(buy_object['buyfee']*100 );
+	$("#buy-sellfee").val(buy_object['sellfee']*100 );
+	$("#buy-housetax").val(Math.round(buy_object['housetax']*100*100)/100 );
 }
 
 function updateInputValuesBudget(){
-	$("#budget-budgetpermonth").val(budget_object['budgetpermonth'] + " 元");
-	$("#budget-loanlimit").val(budget_object['loanlimit']*100 + " %");
-	$("#budget-loantime").val(budget_object['loantime'] + " 年");
-	$("#budget-loanrate").val(budget_object['loanrate']*100 + " %");
-	$("#budget-square").val(budget_object['square'] + " 坪");
+	$("#budget-budgetpermonth").val(budget_object['budgetpermonth'] );
+	$("#budget-loanlimit").val(budget_object['loanlimit']*100 );
+	$("#budget-loantime").val(budget_object['loantime'] );
+	$("#budget-loanrate").val(budget_object['loanrate']*100 );
+	$("#budget-square").val(budget_object['square'] );
+}
+
+function initAllValues(){
+	city_chose_buy = "台北市";
+	dist_chose_buy = "萬華區";
+
+	$("#dropdownMenu-city-buy").html(city_chose_buy + "<span><img src='img/popdown.png'></span>");
+
+	for (var j in Object.keys(city_dict[city_chose_buy])){
+		d3.select(".dropdown-dist-buy").append("li").append("a").text(Object.keys(city_dict[city_chose_buy])[j]);
+	}
+
+	$("#dropdownMenu-dist-buy").html("萬華區 <span><img src='img/popdown.png'></span>");
+
+	$("#rent-money").val("30000");
+	$("#rent-time").val("20");
+	$("#rent-deposit").val("1");
+	$("#rent-inflat").val("1");
+	$("#rent-agentfee").val("50");
+
+	$("#buy-square").val("30");
+	$("#buy-time").val("20");
+	$("#buy-money").val(Math.round(parseFloat(city_dict[city_chose_buy]['萬華區']) * 30));
+	$("#buy-loanlimit").val("70");
+	$("#buy-loantime").val("20");
+	$("#buy-loanrate").val("2");
+	$("#buy-houseinflat").val("0");
+	$("#buy-buyfee").val("2");
+	$("#buy-sellfee").val("4");
+
+	$("#invest-return").val("1");
+
+	city_chose_budget = "新北市";
+	$("#budget-budgetpermonth").val("30000");
+	$("#budget-loanlimit").val("70");
+	$("#budget-loantime").val("20");
+	$("#budget-loanrate").val("2");
+	$("#budget-square").val("30");
+	$("#dropdownMenu-budget").html("新北市<span><img src='img/popdown.png'></span>");
+
 }
 
 function updateEnvironment(){
-	$("#invest-return").val(investreturn*100 + " %");
+	$("#invest-return").val(investreturn*100 );
 	// $("#currency-inflat").val(currencyinflat*100 + " %");
 	// $("#actual-return").text(actual_invest_return*100 + " %");
 }
@@ -734,4 +765,18 @@ function calculateGeoSeries(commonRatio, years, firstEle){
 	}
 
 	return total;
+}
+
+function thousandComma(number){
+
+	 var num = number.toString();
+	 var pattern = /(-?\d+)(\d{3})/;
+	  
+	 while(pattern.test(num))
+	 {
+	  num = num.replace(pattern, "$1,$2");
+	  
+	 }
+	 return num;
+ 
 }

@@ -79,11 +79,11 @@
                             fill: ["rgba(0,0,0,0)",im+"house032.png",'0px','0px']
                         },
                         {
-                            id: 'word23',
+                            id: 'word36',
                             display: 'none',
                             type: 'image',
-                            rect: ['252px', '409px', '717px', '374px', 'auto', 'auto'],
-                            fill: ["rgba(0,0,0,0)",im+"word23.png",'0px','0px']
+                            rect: ['237px', '474px', '743px', '309px', 'auto', 'auto'],
+                            fill: ["rgba(0,0,0,0)",im+"word36.png",'0px','0px']
                         }
                     ],
                     style: {
@@ -106,16 +106,6 @@
                             0,
                             "linear",
                             "${abc3}",
-                            'none',
-                            'block'
-                        ],
-                        [
-                            "eid52",
-                            "display",
-                            1000,
-                            0,
-                            "linear",
-                            "${money022}",
                             'none',
                             'block'
                         ],
@@ -380,6 +370,16 @@
                             'none'
                         ],
                         [
+                            "eid198",
+                            "display",
+                            1493,
+                            0,
+                            "linear",
+                            "${word36}",
+                            'none',
+                            'block'
+                        ],
+                        [
                             "eid38",
                             "rotateZ",
                             500,
@@ -408,16 +408,6 @@
                             "${money}",
                             'block',
                             'none'
-                        ],
-                        [
-                            "eid190",
-                            "top",
-                            1493,
-                            0,
-                            "linear",
-                            "${word23}",
-                            '409px',
-                            '409px'
                         ],
                         [
                             "eid189",
@@ -470,16 +460,6 @@
                             '0deg'
                         ],
                         [
-                            "eid180",
-                            "display",
-                            1493,
-                            0,
-                            "linear",
-                            "${word23}",
-                            'none',
-                            'block'
-                        ],
-                        [
                             "eid41",
                             "top",
                             500,
@@ -490,14 +470,24 @@
                             '-583px'
                         ],
                         [
-                            "eid187",
-                            "top",
-                            1493,
+                            "eid40",
+                            "left",
+                            1000,
                             0,
                             "linear",
-                            "${abc3}",
-                            '358px',
-                            '358px'
+                            "${hand02}",
+                            '316px',
+                            '316px'
+                        ],
+                        [
+                            "eid52",
+                            "display",
+                            1000,
+                            0,
+                            "linear",
+                            "${money022}",
+                            'none',
+                            'block'
                         ],
                         [
                             "eid141",
@@ -540,16 +530,6 @@
                             'none'
                         ],
                         [
-                            "eid184",
-                            "left",
-                            1493,
-                            0,
-                            "linear",
-                            "${word23}",
-                            '252px',
-                            '252px'
-                        ],
-                        [
                             "eid185",
                             "left",
                             1493,
@@ -560,14 +540,14 @@
                             '598px'
                         ],
                         [
-                            "eid40",
-                            "left",
-                            1000,
+                            "eid187",
+                            "top",
+                            1493,
                             0,
                             "linear",
-                            "${hand02}",
-                            '316px',
-                            '316px'
+                            "${abc3}",
+                            '358px',
+                            '358px'
                         ],
                         [
                             "eid37",
