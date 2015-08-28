@@ -11,6 +11,8 @@ var currencyinflat = 0;
 var actual_invest_return = 0;
 var tips_dict = {};
 var tip_selected = "";
+var nav_selected = 0;
+var trading_point_arr = [];
 // var city_clicked = "";
 
 var taiperDistsList = ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"];
@@ -494,7 +496,7 @@ $(document).ready(function(){
 	});
 
 	d3.json("data/taipei_dists_equal.json", function(data_equal_rent){
-		console.log(data_equal_rent);
+		// console.log(data_equal_rent);
 		// var reverseArr = [];
 
 		/*$('#taipei-equalrent-chart').highcharts({
@@ -534,7 +536,7 @@ $(document).ready(function(){
 	        series: data_equal_rent
 	    });*/
 
-		$('#taipei-equalrent-chart').highcharts({
+		/*$('#taipei-equalrent-chart').highcharts({
 	        chart: {
 	            type: 'bar'
 	        },
@@ -559,7 +561,99 @@ $(document).ready(function(){
 	            }
 	        },
 	        series: data_equal_rent
-	    });
+	    });*/
+	});
+
+	d3.csv("data/building_trading.csv", function(data_trading){
+		d3.csv("data/house_price_point.csv", function(data_point){
+			var arr_trading = [], arr_point = [];
+
+			for(var i = 0; i < 5; i++){
+				arr_trading.push([]);
+				arr_point.push([]);
+			}
+
+			for(var i in data_trading){
+				arr_trading[0].push(parseInt(data_trading[i]['台北市']));
+				arr_trading[1].push(parseInt(data_trading[i]['新北市']));
+				arr_trading[2].push(parseInt(data_trading[i]['桃園市']));
+				arr_trading[3].push(parseInt(data_trading[i]['台中市']));
+				arr_trading[4].push(parseInt(data_trading[i]['高雄市']));
+
+				arr_point[0].push(parseFloat(data_point[i]['台北市']));
+				arr_point[1].push(parseFloat(data_point[i]['新北市']));
+				arr_point[2].push(parseFloat(data_point[i]['桃園市']));
+				arr_point[3].push(parseFloat(data_point[i]['台中市']));
+				arr_point[4].push(parseFloat(data_point[i]['高雄市']));
+			}
+
+			for(var i = 0; i < 5; i++){
+				var temp = {};
+				temp['trading'] = arr_trading[i];
+				temp['point'] = arr_point[i];
+
+				trading_point_arr.push(temp);
+			}
+
+			console.log(trading_point_arr);
+
+			$(".nav-option").click(function(){
+				var click_num = parseInt($(this).attr("id").split("-")[2]);
+
+				
+
+				if(click_num != nav_selected){
+					$("#nav-option-" + nav_selected).css("opacity", 0.5);
+					$("#nav-option-" + nav_selected).css("border-bottom", "none");
+					$(this).css("opacity", 1);
+					$(this).css("border-bottom", "2px solid #808080");
+
+					var chart = $('#trading-houseprice-chart').highcharts();
+
+					chart.series[0].setData(trading_point_arr[click_num]['trading']);
+					chart.series[1].setData(trading_point_arr[click_num]['point']);
+
+					console.log(chart.series);
+
+					nav_selected = click_num;
+				}
+			});
+
+			$(".nav-img").click(function(){
+				var click_direction = $(this).attr("id").split("-")[1];
+
+				if(click_direction == "left"){
+					if(nav_selected != 0){
+						$("#nav-option-" + nav_selected).css("opacity", 0.5);
+						$("#nav-option-" + nav_selected).css("border-bottom", "none");
+						$("#nav-option-" + (nav_selected-1)).css("opacity", 1);
+						$("#nav-option-" + (nav_selected-1)).css("border-bottom", "2px solid #808080");
+
+						var chart = $('#trading-houseprice-chart').highcharts();
+
+						chart.series[0].setData(trading_point_arr[nav_selected-1]['trading']);
+						chart.series[1].setData(trading_point_arr[nav_selected-1]['point']);
+
+						nav_selected = nav_selected - 1;
+					}
+				}
+				else{
+					if(nav_selected != 4){
+						$("#nav-option-" + nav_selected).css("opacity", 0.5);
+						$("#nav-option-" + nav_selected).css("border-bottom", "none");
+						$("#nav-option-" + (nav_selected+1)).css("opacity", 1);
+						$("#nav-option-" + (nav_selected+1)).css("border-bottom", "2px solid #808080");
+
+						var chart = $('#trading-houseprice-chart').highcharts();
+
+						chart.series[0].setData(trading_point_arr[nav_selected+1]['trading']);
+						chart.series[1].setData(trading_point_arr[nav_selected+1]['point']);
+
+						nav_selected = nav_selected + 1;
+					}
+				}
+			});
+		});
 	});
 
 	$('#trading-houseprice-chart').highcharts({
@@ -567,7 +661,7 @@ $(document).ready(function(){
             zoomType: 'xy'
         },
         title: {
-            text: '台北市<br>建物買賣交易量與信義房價指數變化'
+            text: '建物買賣交易量與信義房價指數變化'
         },
         
         xAxis: [{

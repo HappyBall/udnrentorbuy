@@ -270,12 +270,27 @@ label{
 	margin: auto;
 }
 
+.highchart-nav-container{
+	display: table;
+	margin: 40px auto;
+}
+
+.nav-img{
+	cursor: pointer;
+}
+
 .nav-option{
 	font-size: 22px;
 	font-family: 微軟正黑體;
 	margin-left: 20px;
 	margin-right: 20px;
 	cursor: pointer;
+	opacity: 0.5;
+}
+
+#nav-option-0{
+	opacity: 1;
+	border-bottom: 2px solid #808080;
 }
 
 .ps{
