@@ -1,8 +1,8 @@
 var city_dict = {};
 // var city_chose_rent = "";
 var city_chose_budget = "";
-var city_chose_buy = "";
-var dist_chose_buy = "";
+var city_chose_buy = "台北市";
+var dist_chose_buy = "萬華區";
 var rent_object = {};
 var buy_object = {};
 var budget_object = {};
@@ -174,22 +174,42 @@ $(document).ready(function(){
 						if(!isNaN(parseFloat($("#buy-square").val()))){
 							var squs = parseFloat($("#buy-square").val());
 
-							$("#buy-money").val(Math.round(squs * parseFloat(city_dict[city_chose_buy][dist_clicked])));
+							$("#buy-money").val(thousandComma(Math.round(squs * parseFloat(city_dict[city_chose_buy][dist_clicked]))));
 						}
 
 						dist_chose_buy = dist_clicked;
 					}
 				});
 
-				$("#buy-square").blur(function(){
-					if(!isNaN(parseFloat(city_dict[city_chose_buy][dist_chose_buy])) && !isNaN(parseInt($("#buy-square").val()))){
-						var squs = parseFloat($("#buy-square").val());
-						$("#buy-money").val(Math.round(squs * parseFloat(city_dict[city_chose_buy][dist_chose_buy])));
-					}
-				});
+				
 			}
 
 
+		});
+
+		$("#buy-square").blur(function(){
+			if(!isNaN(parseFloat(city_dict[city_chose_buy][dist_chose_buy])) && !isNaN(parseInt($("#buy-square").val()))){
+				var squs = parseFloat($("#buy-square").val());
+				$("#buy-money").val(thousandComma(Math.round(squs * parseFloat(city_dict[city_chose_buy][dist_chose_buy]))));
+			}
+		});
+
+		$(".dropdown-dist-buy li").click(function(){
+			// console.log("hi");
+			var dist_clicked = $(this).find("a").text();
+			// console.log(dist_clicked);
+
+			if(dist_clicked != dist_chose_buy){
+				$("#dropdownMenu-dist-buy").html(dist_clicked + "<span><img src='img/popdown.png'></span>");
+				// console.log(parseInt($("#buy-square").val()));
+				if(!isNaN(parseFloat($("#buy-square").val()))){
+					var squs = parseFloat($("#buy-square").val());
+
+					$("#buy-money").val(thousandComma(Math.round(squs * parseFloat(city_dict[city_chose_buy][dist_clicked]))));
+				}
+
+				dist_chose_buy = dist_clicked;
+			}
 		});
 
 		$("#cal-btn-rent-buy").click(function(){
@@ -199,7 +219,7 @@ $(document).ready(function(){
 			// console.log(rent_object);
 			updateInputValuesRent();
 
-			investreturn = isNaN(parseInt($("#invest-return").val()))? 0 : parseInt($("#invest-return").val())/100;
+			investreturn = isNaN(parseFloat($("#invest-return").val()))? 0 : parseFloat($("#invest-return").val())/100;
 			// currencyinflat = isNaN(parseInt($("#currency-inflat").val()))? 0 : parseInt($("#currency-inflat").val())/100;
 			actual_invest_return = investreturn;
 
@@ -237,12 +257,12 @@ $(document).ready(function(){
 			$("#buy-totalloan").text("$" + thousandComma(Math.round(totalLoan)));
 
 			//calculate buy total tax
-			var totalTax = buy_object['money'] * buy_object['housetax'] * buy_object['time'];
+			var totalTax = buy_object['housetax'] * buy_object['time'];
 			$("#buy-totaltax").text("$" + thousandComma(Math.round(totalTax)));
 
 			//calculate buy oppotunity cost
 			var initCostOppo = initCost*Math.pow(1+actual_invest_return, buy_object['time']) - initCost;
-			var taxOppo =  calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, buy_object['money'] * buy_object['housetax'] * (1 + actual_invest_return)) - buy_object['money'] * buy_object['housetax'] * (buy_object['time'] - 1);
+			var taxOppo =  calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, buy_object['housetax'] * (1 + actual_invest_return)) - buy_object['housetax'] * (buy_object['time'] - 1);
 
 			if(buy_object['loantime'] >= buy_object['time'])
 				var loanOppo = calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, loanPerYear * (1 + actual_invest_return)) - loanPerYear * Math.min((buy_object['time'] - 1), buy_object['loantime']);
@@ -461,7 +481,7 @@ $(document).ready(function(){
 					return b.pricepsquare - a.pricepsquare;
 				});
 
-				console.log(distsArr);
+				// console.log(distsArr);
 
 				distsStr = "";
 
@@ -476,7 +496,7 @@ $(document).ready(function(){
 					}
 				}
 
-				console.log(distsStr);
+				// console.log(distsStr);
 
 				if(distsStr.length == 0)
 					distsStr = "沒有符合的地區";
@@ -493,74 +513,15 @@ $(document).ready(function(){
 
 	});
 
-	d3.json("data/taipei_dists_equal.json", function(data_equal_rent){
-		// console.log(data_equal_rent);
-		// var reverseArr = [];
+	/*d3.csv("data/sixcities_dists_equal.csv", function(data_equal_rent){
+		console.log(data_equal_rent);
 
-		/*$('#taipei-equalrent-chart').highcharts({
-	        title: {
-	            text: 'Monthly Average Temperature',
-	            x: -20 //center
-	        },
-	        credits: {
-	        	enabled: false
-	        },
-	        subtitle: {
-	            text: 'Source: WorldClimate.com',
-	            x: -20
-	        },
-	        xAxis: {
-	            categories: [10, 15, 20, 25, 30, 35, 40]
-	        },
-	        yAxis: {
-	            title: {
-	                text: '租金（元）'
-	            },
-	            plotLines: [{
-	                value: 0,
-	                width: 1,
-	                color: '#808080'
-	            }]
-	        },
-	        tooltip: {
-	            valueSuffix: '元'
-	        },
-	        legend: {
-	            layout: 'vertical',
-	            align: 'right',
-	            verticalAlign: 'middle',
-	            borderWidth: 0
-	        },
-	        series: data_equal_rent
-	    });*/
-
-		/*$('#taipei-equalrent-chart').highcharts({
-	        chart: {
-	            type: 'bar'
-	        },
-	        title: {
-	            text: 'Stacked bar chart'
-	        },
-	        xAxis: {
-	            categories: taiperDistsList
-	        },
-	        yAxis: {
-	            min: 0,
-	            title: {
-	                text: 'Total fruit consumption'
-	            }
-	        },
-	        legend: {
-	            reversed: true
-	        },
-	        plotOptions: {
-	            series: {
-	                stacking: 'normal'
-	            }
-	        },
-	        series: data_equal_rent
-	    });*/
-	});
+		for (var i in data_equal_rent){
+			var dist_chart_container = d3.select("#equal-rent-chart").append("div").attr("class", "dist-chart-container");
+			dist_chart_container.append("div").attr("class", "dists fl-left myfont");
+			dist_chart_container.append("div").attr("class", "equal-bar fl-left");
+		}
+	});*/
 
 	d3.csv("data/building_trading.csv", function(data_trading){
 		d3.csv("data/house_price_point.csv", function(data_point){
@@ -743,64 +704,64 @@ $(document).ready(function(){
 
 function rentObjectInit(){
 	// rent_object['square'] = isNaN(parseInt($("#rent-square").val()))? 0 : parseInt($("#rent-square").val());
-	rent_object['money'] = isNaN(parseInt($("#rent-money").val()))? 0 : parseInt($("#rent-money").val());
-	rent_object['time'] = isNaN(parseInt($("#rent-time").val()))? 0 : parseInt($("#rent-time").val());
-	rent_object['deposit'] = isNaN(parseFloat($("#rent-deposit").val()))? 0 : parseFloat($("#rent-deposit").val());
-	rent_object['inflat'] = isNaN(parseFloat($("#rent-inflat").val()))? 0 : parseFloat($("#rent-inflat").val())/100;
-	rent_object['fee'] = isNaN(parseFloat($("#rent-agentfee").val()))? 0 : parseFloat($("#rent-agentfee").val())/100;
+	rent_object['money'] = isNaN(parseInt($("#rent-money").val().replace(/[,]+/g,"")))? 0 : parseInt($("#rent-money").val().replace(/[,]+/g,""));
+	rent_object['time'] = isNaN(parseInt($("#rent-time").val().replace(/[,]+/g,"")))? 0 : parseInt($("#rent-time").val().replace(/[,]+/g,""));
+	rent_object['deposit'] = isNaN(parseFloat($("#rent-deposit").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#rent-deposit").val().replace(/[,]+/g,""));
+	rent_object['inflat'] = isNaN(parseFloat($("#rent-inflat").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#rent-inflat").val().replace(/[,]+/g,""))/100;
+	rent_object['fee'] = isNaN(parseFloat($("#rent-agentfee").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#rent-agentfee").val().replace(/[,]+/g,""))/100;
 	// rent_object['investreturn'] = isNaN(parseInt($("#rent-investreturn").val()))? 0 : parseInt($("#rent-investreturn").val());
 }
 
 function buyObjectInit(){
-	buy_object['square'] = isNaN(parseInt($("#buy-square").val()))? 0 : parseInt($("#buy-square").val());
-	buy_object['money'] = isNaN(parseInt($("#buy-money").val()))? 0 : parseInt($("#buy-money").val());
-	buy_object['time'] = isNaN(parseInt($("#buy-time").val()))? 0 : parseInt($("#buy-time").val());
-	buy_object['loanlimit'] = isNaN(parseFloat($("#buy-loanlimit").val()))? 0 : parseFloat($("#buy-loanlimit").val())/100;
-	buy_object['loantime'] = isNaN(parseInt($("#buy-loantime").val()))? 0 : parseInt($("#buy-loantime").val());
-	buy_object['loanrate'] = isNaN(parseFloat($("#buy-loanrate").val()))? 0 : parseFloat($("#buy-loanrate").val())/100;
-	buy_object['inflat'] = isNaN(parseFloat($("#buy-houseinflat").val()))? 0 : parseFloat($("#buy-houseinflat").val())/100;
-	buy_object['buyfee'] = isNaN(parseFloat($("#buy-buyfee").val()))? 0 : parseFloat($("#buy-buyfee").val())/100;
-	buy_object['sellfee'] = isNaN(parseFloat($("#buy-sellfee").val()))? 0 : parseFloat($("#buy-sellfee").val())/100;
-	buy_object['housetax'] = isNaN(parseFloat($("#buy-housetax").val()))? 0.2*0.012 : parseFloat($("#buy-housetax").val())/100;
+	buy_object['square'] = isNaN(parseInt($("#buy-square").val().replace(/[,]+/g,"")))? 0 : parseInt($("#buy-square").val().replace(/[,]+/g,""));
+	buy_object['money'] = isNaN(parseInt($("#buy-money").val().replace(/[,]+/g,"")))? 0 : parseInt($("#buy-money").val().replace(/[,]+/g,""));
+	buy_object['time'] = isNaN(parseInt($("#buy-time").val().replace(/[,]+/g,"")))? 0 : parseInt($("#buy-time").val().replace(/[,]+/g,""));
+	buy_object['loanlimit'] = isNaN(parseFloat($("#buy-loanlimit").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#buy-loanlimit").val().replace(/[,]+/g,""))/100;
+	buy_object['loantime'] = isNaN(parseInt($("#buy-loantime").val().replace(/[,]+/g,"")))? 0 : parseInt($("#buy-loantime").val().replace(/[,]+/g,""));
+	buy_object['loanrate'] = isNaN(parseFloat($("#buy-loanrate").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#buy-loanrate").val().replace(/[,]+/g,""))/100;
+	buy_object['inflat'] = isNaN(parseFloat($("#buy-houseinflat").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#buy-houseinflat").val().replace(/[,]+/g,""))/100;
+	buy_object['buyfee'] = isNaN(parseFloat($("#buy-buyfee").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#buy-buyfee").val().replace(/[,]+/g,""))/100;
+	buy_object['sellfee'] = isNaN(parseFloat($("#buy-sellfee").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#buy-sellfee").val().replace(/[,]+/g,""))/100;
+	buy_object['housetax'] = isNaN(parseFloat($("#buy-housetax").val().replace(/[,]+/g,"")))? 0 : parseInt($("#buy-housetax").val().replace(/[,]+/g,""));
 }
 
 function budgetObjectInit(){
-	budget_object['budgetpermonth'] = isNaN(parseInt($("#budget-budgetpermonth").val()))? 0 : parseInt($("#budget-budgetpermonth").val());
-	budget_object['loanlimit'] = isNaN(parseFloat($("#budget-loanlimit").val()))? 0 : parseFloat($("#budget-loanlimit").val())/100;
-	budget_object['loantime'] = isNaN(parseInt($("#budget-loantime").val()))? 0 : parseInt($("#budget-loantime").val());
-	budget_object['loanrate'] = isNaN(parseFloat($("#budget-loanrate").val()))? 0 : parseFloat($("#budget-loanrate").val())/100;
-	budget_object['square'] = isNaN(parseInt($("#budget-square").val()))? 0 : parseInt($("#budget-square").val());
+	budget_object['budgetpermonth'] = isNaN(parseInt($("#budget-budgetpermonth").val().replace(/[,]+/g,"")))? 0 : parseInt($("#budget-budgetpermonth").val().replace(/[,]+/g,""));
+	budget_object['loanlimit'] = isNaN(parseFloat($("#budget-loanlimit").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#budget-loanlimit").val().replace(/[,]+/g,""))/100;
+	budget_object['loantime'] = isNaN(parseInt($("#budget-loantime").val().replace(/[,]+/g,"")))? 0 : parseInt($("#budget-loantime").val().replace(/[,]+/g,""));
+	budget_object['loanrate'] = isNaN(parseFloat($("#budget-loanrate").val().replace(/[,]+/g,"")))? 0 : parseFloat($("#budget-loanrate").val().replace(/[,]+/g,""))/100;
+	budget_object['square'] = isNaN(parseInt($("#budget-square").val().replace(/[,]+/g,"")))? 0 : parseInt($("#budget-square").val().replace(/[,]+/g,""));
 }
 
 function updateInputValuesRent(){
 	// $("#rent-square").val(rent_object['square'] + " 坪");
-	$("#rent-money").val(rent_object['money'] );
-	$("#rent-time").val(rent_object['time'] );
-	$("#rent-deposit").val(rent_object['deposit'] );
-	$("#rent-inflat").val(rent_object['inflat']*100 );
-	$("#rent-agentfee").val(rent_object['fee']*100 );
+	$("#rent-money").val(thousandComma(rent_object['money']) );
+	$("#rent-time").val(thousandComma(rent_object['time']) );
+	$("#rent-deposit").val(thousandComma(rent_object['deposit']) );
+	$("#rent-inflat").val(thousandComma(rent_object['inflat']*100) );
+	$("#rent-agentfee").val(thousandComma(rent_object['fee']*100) );
 	// $("#rent-investreturn").val(rent_object['investreturn'] + " %");
 }
 
 function updateInputValuesBuy(){
-	$("#buy-square").val(buy_object['square'] );
-	$("#buy-money").val(buy_object['money'] );
-	$("#buy-time").val(buy_object['time'] );
-	$("#buy-loanlimit").val(buy_object['loanlimit']*100 );
-	$("#buy-loantime").val(buy_object['loantime'] );
-	$("#buy-loanrate").val(buy_object['loanrate']*100 );
-	$("#buy-houseinflat").val(buy_object['inflat']*100 );
-	$("#buy-buyfee").val(buy_object['buyfee']*100 );
-	$("#buy-sellfee").val(buy_object['sellfee']*100 );
-	$("#buy-housetax").val(Math.round(buy_object['housetax']*100*100)/100 );
+	$("#buy-square").val(thousandComma(buy_object['square']) );
+	$("#buy-money").val(thousandComma(buy_object['money']) );
+	$("#buy-time").val(thousandComma(buy_object['time']) );
+	$("#buy-loanlimit").val(thousandComma(buy_object['loanlimit']*100) );
+	$("#buy-loantime").val(thousandComma(buy_object['loantime']) );
+	$("#buy-loanrate").val(thousandComma(buy_object['loanrate']*100) );
+	$("#buy-houseinflat").val(thousandComma(buy_object['inflat']*100) );
+	$("#buy-buyfee").val(thousandComma(buy_object['buyfee']*100) );
+	$("#buy-sellfee").val(thousandComma(buy_object['sellfee']*100) );
+	$("#buy-housetax").val(thousandComma(Math.round(buy_object['housetax'])) );
 }
 
 function updateInputValuesBudget(){
-	$("#budget-budgetpermonth").val(budget_object['budgetpermonth'] );
-	$("#budget-loanlimit").val(budget_object['loanlimit']*100 );
-	$("#budget-loantime").val(budget_object['loantime'] );
-	$("#budget-loanrate").val(budget_object['loanrate']*100 );
-	$("#budget-square").val(budget_object['square'] );
+	$("#budget-budgetpermonth").val(thousandComma(budget_object['budgetpermonth']) );
+	$("#budget-loanlimit").val(thousandComma(budget_object['loanlimit']*100) );
+	$("#budget-loantime").val(thousandComma(budget_object['loantime']) );
+	$("#budget-loanrate").val(thousandComma(budget_object['loanrate']*100) );
+	$("#budget-square").val(thousandComma(budget_object['square']) );
 }
 
 function initAllValues(){
@@ -815,7 +776,7 @@ function initAllValues(){
 
 	$("#dropdownMenu-dist-buy").html("萬華區 <span><img src='img/popdown.png'></span>");
 
-	$("#rent-money").val("30000");
+	$("#rent-money").val(thousandComma(30000));
 	$("#rent-time").val("20");
 	$("#rent-deposit").val("1");
 	$("#rent-inflat").val("1");
@@ -823,7 +784,7 @@ function initAllValues(){
 
 	$("#buy-square").val("30");
 	$("#buy-time").val("20");
-	$("#buy-money").val(Math.round(parseFloat(city_dict[city_chose_buy]['萬華區']) * 30));
+	$("#buy-money").val(thousandComma(Math.round(parseFloat(city_dict[city_chose_buy]['萬華區']) * 30)));
 	$("#buy-loanlimit").val("70");
 	$("#buy-loantime").val("20");
 	$("#buy-loanrate").val("2");
@@ -834,7 +795,7 @@ function initAllValues(){
 	$("#invest-return").val("1");
 
 	city_chose_budget = "新北市";
-	$("#budget-budgetpermonth").val("30000");
+	$("#budget-budgetpermonth").val(thousandComma(30000));
 	$("#budget-loanlimit").val("70");
 	$("#budget-loantime").val("20");
 	$("#budget-loanrate").val("2");
@@ -844,7 +805,7 @@ function initAllValues(){
 }
 
 function updateEnvironment(){
-	$("#invest-return").val(investreturn*100 );
+	$("#invest-return").val(thousandComma(investreturn*100) );
 	// $("#currency-inflat").val(currencyinflat*100 + " %");
 	// $("#actual-return").text(actual_invest_return*100 + " %");
 }

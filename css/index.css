@@ -91,6 +91,7 @@ label{
 #rent-buy-calculator{
 	position: relative;
 	width: 100%;
+	/*font-family: 微軟正黑體;*/
 }
 
 #budget-calculator{
@@ -193,6 +194,18 @@ label{
 	padding-left: 15%;
 }
 
+.dist-chart-container{
+	width: 100%;
+}
+
+.dists{
+	width: 15%;
+}
+
+.equal-bar{
+	width: 85%;
+}
+
 #buy-result{
 	border-right: 1px solid #999999;
 }
@@ -229,6 +242,15 @@ label{
 	background-color: rgba(0,171,199,0.15);
 	padding-top: 20px;
 	padding-bottom: 20px;
+	position: relative;
+}
+
+#budget-tip{
+	position: absolute;
+	top: 25px;
+	right: 50px;
+	font-size: 16px;
+	color: #00abc7;
 }
 
 #budget-result-container{

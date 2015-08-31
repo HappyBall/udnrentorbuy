@@ -108,11 +108,11 @@
 					<div class="form-group">
 						<label for="dropdownMenu-city-buy" class="col-sm-3 control-label">地區</label>
 					  	<div class="dropdown fl-left col-sm-3">
-						  <button class="btn btn-default dropdown-toggle col-sm-12" type="button" id="dropdownMenu-city-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						  <button class="btn btn-default dropdown-toggle col-sm-12 myfont" type="button" id="dropdownMenu-city-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 						    縣市
 						    <span><img src="img/popdown.png"></span>
 						  </button>
-						  <ul class="dropdown-menu dropdown-city-buy" aria-labelledby="dropdownMenu-city-buy">
+						  <ul class="dropdown-menu dropdown-city-buy myfont" aria-labelledby="dropdownMenu-city-buy">
 						    <!-- <li><a href="#">Action</a></li>
 						    <li><a href="#">Another action</a></li>
 						    <li><a href="#">Something else here</a></li>
@@ -120,12 +120,12 @@
 						  </ul>
 						</div>
 						<div class="dropdown fl-left fl-left col-sm-3">
-						  <button class="btn btn-default dropdown-toggle col-sm-12" type="button" id="dropdownMenu-dist-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						  <button class="btn btn-default dropdown-toggle col-sm-12 myfont" type="button" id="dropdownMenu-dist-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 						    地區
 						    <span><img src="img/popdown.png"></span>
 						  </button>
-						  <ul class="dropdown-menu dropdown-dist-buy" aria-labelledby="dropdownMenu-dist-buy">
-						  	<li><a>請先選擇縣市</a></li>
+						  <ul class="dropdown-menu dropdown-dist-buy myfont" aria-labelledby="dropdownMenu-dist-buy">
+						  	<!-- <li><a>請先選擇縣市</a></li> -->
 						    <!-- <li><a>Action</a></li>
 						    <li><a>Another action</a></li>
 						    <li><a href="#">Something else here</a></li>
@@ -184,9 +184,9 @@
 					    	<img src="img/question_mark.png" class = "question-mark" id = "question-housetax">
 					    </label>
 					    <div class="col-sm-6">
-					      <input type="text" class="form-control" id="buy-housetax" placeholder="輸入房屋稅(%)">
+					      <input type="text" class="form-control" id="buy-housetax" placeholder="輸入房屋稅(元)">
 					    </div>
-					    <label for="buy-housetax" class="col-sm-1 control-label">%</label>
+					    <label for="buy-housetax" class="col-sm-1 control-label">元</label>
 					</div>
 
 					<div class="form-group">
@@ -444,12 +444,16 @@
 					註：房屋保險不計、房屋維修與房貸抵稅假定抵銷。<br>
 					各行政區房價資料來源：<a href="http://plvr.land.moi.gov.tw/Index" target = "_blank">內政部不動產成交案件實際資訊資料供應系統</a><br>
 					<a href="http://price.house123.com.tw/transrec/?t=region,%E5%8F%B0%E5%8C%97%E5%B8%82&d=no&p=25.0329636,121.56542680000007&dr=current&ot=all" target = "_blank">House 123</a>整理提供，最新資料更新至2015年6月。<br>
-					本資料僅供參考，實際資料<a href="http://lvr.land.moi.gov.tw/N11/homePage.action" target="_blank">仍以內政部不動產交易實價查詢服務網為主。</a><br>
+					本資料僅供參考，實際資料仍以<a href="http://lvr.land.moi.gov.tw/N11/homePage.action" target="_blank">內政部不動產交易實價查詢服務網</a>為主。<br>
 					<a href="https://docs.google.com/document/d/1dufkiuZjml2zmOYsoD_cuVz4nFBsd_XQLXIGY1zdlgY/edit?usp=sharing" target = "_blank">看計算公式</a>
 				</div>
 			</div>
 			
 
+		</div>
+
+		<div class = "sec-container">
+			<div id = "equal-rent-chart"></div>
 		</div>
 
 		<div class = "sec-container">
@@ -464,6 +468,7 @@
 			<div class = "insert-value-notice" id = "budget-notice">可自行輸入數值試算</div>
 			<div class = "house-img"><img src="img/house.png"></div>
 			<div class = "container-fluid col-sm-10 col-sm-offset-1" id = "budget-container">
+				<div class = "myfont" id = "budget-tip">*建議不超過<br>&nbsp;&nbsp;每月家庭收入1/3</div>
 				<form class="form-horizontal col-sm-6 col-sm-offset-3" role="form" id = "budget-form">
 					<!-- <div>算算看你的預算能買哪裡的房子！</div> -->
 
@@ -475,6 +480,7 @@
 					      <input type="text" class="form-control" id="budget-budgetpermonth" placeholder="輸入每個月的房貸支出(元)">
 					    </div>
 					    <label for="budget-budgetpermonth" class="col-sm-1 control-label">元</label>
+					    <div></div>
 					  </div>
 					
 					  <div class="form-group">
@@ -512,11 +518,11 @@
 					  <div class="form-group">
 					  	<label for="dropdownMenu-budget" class="col-sm-5 control-label">地區</label>
 					  	<div class="dropdown col-sm-6">
-						  <button class="btn btn-default dropdown-toggle col-sm-12" type="button" id="dropdownMenu-budget" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						  <button class="btn btn-default dropdown-toggle col-sm-12 myfont" type="button" id="dropdownMenu-budget" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 						    縣市
 						    <span><img src="img/popdown.png"></span>
 						  </button>
-						  <ul class="dropdown-menu dropdown-budget" aria-labelledby="dropdownMenu-budget">
+						  <ul class="dropdown-menu dropdown-budget myfont" aria-labelledby="dropdownMenu-budget">
 						    <!-- <li><a href="#">Action</a></li>
 						    <li><a href="#">Another action</a></li>
 						    <li><a href="#">Something else here</a></li>
