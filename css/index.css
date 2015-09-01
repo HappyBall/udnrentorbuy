@@ -15,6 +15,12 @@ label{
 	background-color: #00abc7;
 	padding: 0;
 	width: 100%;
+	display: table;
+}
+
+#first-cover img{
+	display: table;
+	margin: auto;
 }
 
 #fore-words{
@@ -28,6 +34,14 @@ label{
 .question-mark{
 	width: 20px;
 	opacity: 0.5;
+}
+
+#question-houseinflat{
+	opacity: 1;
+}
+
+#question-rentinflat{
+	opacity: 1;
 }
 
 .horizontal-line{
@@ -154,8 +168,13 @@ label{
 	font-weight: bold;
 	font-family: 微軟正黑體;
 	font-size: 30px;
-	color: #00abc7;
+	color: white;
 	border-radius: 10px;
+	background-color: #00abc7;
+}
+
+#cal-btn-rent-buy:hover{
+	opacity: 0.7;
 }
 
 #rent-buy-result-container{
@@ -166,7 +185,7 @@ label{
 }
 
 .tip-block{
-	display: none;
+	display: table;
 	font-size: 17px;
 	font-family: 微軟正黑體;
 	line-height: 25px;
@@ -254,7 +273,7 @@ label{
 }
 
 #budget-result-container{
-	background-color: rgba(230,230,230,0.15);
+	background-color: rgba(220,220,220,0.4);
 	height: 375px;
 	padding-top: 40px;
 	display: none;
@@ -284,8 +303,13 @@ label{
 	font-weight: bold;
 	font-family: 微軟正黑體;
 	font-size: 30px;
-	color: #00abc7;
+	color: white;
 	border-radius: 10px;
+	background-color: #00abc7;
+}
+
+#cal-btn-budget:hover{
+	opacity: 0.7;
 }
 
 .static-chart img{

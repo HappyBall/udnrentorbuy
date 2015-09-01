@@ -10,7 +10,8 @@ var investreturn = 0;
 var currencyinflat = 0;
 var actual_invest_return = 0;
 var tips_dict = {};
-var tip_selected = "";
+var tip_selected_buy = "question-houseinflat";
+var tip_selected_rent = "question-rentinflat";
 var nav_selected = 0;
 var trading_point_arr = [];
 // var city_clicked = "";
@@ -26,8 +27,8 @@ if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.u
 
 $(document).ready(function(){
 
-	$("#first-cover").height($(window).height());
-
+	$("#first-cover").css("height", $(window).height());
+	$("#first-cover img").css("height", $(window).height());
 	
 
 	// console.log(rent_object);
@@ -44,27 +45,37 @@ $(document).ready(function(){
 		// console.log(tips_dict);
 
 		$(".question-mark").on("mouseover", function(){
-			if($(this).attr("id") != tip_selected){
 
-				var key = $(this).attr("id").split("-")[1];
+			var key = $(this).attr("id").split("-")[1];
 
-				if($(this).parent().attr("for").split("-")[0] == "rent"){
+			if($(this).parent().attr("for").split("-")[0] == "rent"){
+
+				if($(this).attr("id") != tip_selected_rent){
 
 					$("#rent-tip-title").html(tips_dict[key]['title']);
 					$("#rent-tip-content").html(tips_dict[key]['content']);
-					$("#rent-tip-block").css("display", "table");
+					// $("#rent-tip-block").css("display", "table");
+
+					$("#" + tip_selected_rent).css("opacity", 0.5);
+					$(this).css("opacity", 1);
+
+					tip_selected_rent = $(this).attr("id");
 				}
-				else{
+			}
+			else{
+				if($(this).attr("id") != tip_selected_buy){
+
 					$("#buy-tip-title").html(tips_dict[key]['title']);
 					$("#buy-tip-content").html(tips_dict[key]['content']);
-					$("#buy-tip-block").css("display", "table");
+					// $("#buy-tip-block").css("display", "table");
+
+					$("#" + tip_selected_buy).css("opacity", 0.5);
+					$(this).css("opacity", 1);
+
+					tip_selected_buy = $(this).attr("id");
 				}
-
-				$("#" + tip_selected).css("opacity", 0.5);
-				$(this).css("opacity", 1);
-
-				tip_selected = $(this).attr("id");
 			}
+		
 		});
 
 
@@ -86,6 +97,8 @@ $(document).ready(function(){
 		rentObjectInit();
 		buyObjectInit();
 		budgetObjectInit();
+
+		initCal();
 
 		// console.log(city_dict);
 		for (var i in Object.keys(city_dict)){
@@ -615,6 +628,8 @@ $(document).ready(function(){
 		});
 	});
 
+	
+
 	$('#trading-houseprice-chart').highcharts({
         chart: {
             zoomType: 'xy'
@@ -832,4 +847,176 @@ function thousandComma(number){
 	 }
 	 return num;
  
+}
+
+function initCal (){
+			buyObjectInit();
+			updateInputValuesBuy();
+			rentObjectInit();
+			// console.log(rent_object);
+			updateInputValuesRent();
+
+			investreturn = isNaN(parseFloat($("#invest-return").val()))? 0 : parseFloat($("#invest-return").val())/100;
+			// currencyinflat = isNaN(parseInt($("#currency-inflat").val()))? 0 : parseInt($("#currency-inflat").val())/100;
+			actual_invest_return = investreturn;
+
+			updateEnvironment();
+
+			var firstPay = buy_object['money'] * (1 - buy_object['loanlimit']);
+			var loan = buy_object['money'] * buy_object['loanlimit'];
+			var buyfee = buy_object['money'] * buy_object['buyfee'];
+			var loanMonthRate = buy_object['loanrate']/12;
+
+			//calculate buy init cost
+			var initCost = firstPay + buyfee;
+			$("#buy-initcost").text("$" + thousandComma(Math.round(initCost)));
+
+			//calculate buy total loan
+
+			var totalLoan = 0, loanPerYear = 0, loanPerMonth = 0;
+
+			if(buy_object['loanrate'] == 0){
+				if(buy_object['loantime'] == 0) 
+					loanPerMonth = 0;
+				else
+					loanPerMonth = loan/(buy_object['loantime']*12);
+				loanPerYear = loanPerMonth*12;
+				totalLoan = loan;
+			}
+			else{
+				if(buy_object['loantime'] == 0) 
+					loanPerMonth = 0;
+				else
+					loanPerMonth = (loan * loanMonthRate) / (1 - Math.pow(1 + loanMonthRate, buy_object['loantime']*(-12)));
+				loanPerYear = loanPerMonth * 12;
+				totalLoan = loanPerYear * Math.min(buy_object['time'], buy_object['loantime']);
+			}
+			$("#buy-totalloan").text("$" + thousandComma(Math.round(totalLoan)));
+
+			//calculate buy total tax
+			var totalTax = buy_object['housetax'] * buy_object['time'];
+			$("#buy-totaltax").text("$" + thousandComma(Math.round(totalTax)));
+
+			//calculate buy oppotunity cost
+			var initCostOppo = initCost*Math.pow(1+actual_invest_return, buy_object['time']) - initCost;
+			var taxOppo =  calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, buy_object['housetax'] * (1 + actual_invest_return)) - buy_object['housetax'] * (buy_object['time'] - 1);
+
+			if(buy_object['loantime'] >= buy_object['time'])
+				var loanOppo = calculateGeoSeries(1 + actual_invest_return, buy_object['time'] - 1, loanPerYear * (1 + actual_invest_return)) - loanPerYear * Math.min((buy_object['time'] - 1), buy_object['loantime']);
+			else
+				var loanOppo = calculateGeoSeries(1 + actual_invest_return, buy_object['loantime'], loanPerYear * Math.pow(1+actual_invest_return, buy_object['time'] - buy_object['loantime'])) - loanPerYear * Math.min((buy_object['time'] - 1), buy_object['loantime']);
+
+			$("#buy-oppotunitycost").text("$" + thousandComma(Math.round(initCostOppo + taxOppo + loanOppo)));
+
+			//calculate buy sell balance
+			var sellPrice = buy_object['money'] * Math.pow(1+buy_object['inflat'], buy_object['time']);
+			var loanleft = 0;
+
+			if(buy_object['loanrate'] == 0)
+				loanleft = Math.max(0, loan - loanPerMonth*buy_object['time']*12);
+			else
+				loanleft = Math.max(0, loan*Math.pow(1+loanMonthRate, buy_object['time']*12) - loanPerMonth*(Math.pow(1+loanMonthRate, buy_object['time']*12) - 1)/loanMonthRate);
+
+			var sellBalance = sellPrice*(1 - buy_object['sellfee']) - loanleft;
+			$("#buy-sellbalance").text("- $" + thousandComma(Math.round(sellBalance)));
+
+			//calculate total cost
+			var totalCost = initCost + totalTax + totalLoan + (initCostOppo + taxOppo + loanOppo) - sellBalance;
+			$("#buy-totalcost").text("$" + thousandComma(Math.round(totalCost)) );
+
+			//calculate rent init cost
+			var initCost_rent = rent_object['money'] * (rent_object['deposit'] + rent_object['fee']);
+			$("#rent-initcost").text("$" + thousandComma(Math.round(initCost_rent)));
+
+			//calculate rent total money 
+			var totalMoney_rent = calculateGeoSeries(1+rent_object['inflat'], rent_object['time'], rent_object['money']*12);
+			$("#rent-totalmoney").text("$" + thousandComma(Math.round(totalMoney_rent)) );
+
+			//calculate rent oppotunity cost
+			var initCostOppo_rent = initCost_rent * (Math.pow(1+actual_invest_return, rent_object['time']) - 1);
+			var totalMoneyOppo_rent = calculateGeoSeries( (1+actual_invest_return)/(1+rent_object['inflat']), rent_object['time'], rent_object['money']*12*Math.pow(1+rent_object['inflat'], rent_object['time'] - 1)) - totalMoney_rent;
+			$("#rent-oppotunitycost").text("$" + thousandComma(Math.round(totalMoneyOppo_rent + initCostOppo_rent)) );
+
+			//calculate rent deposit back
+			var depositBack_rent = rent_object['money'] * rent_object['deposit'];
+			$("#rent-depositback").text("- $" + thousandComma(Math.round(depositBack_rent)) );
+
+			//calculate total cost
+			var totalCost_rent = initCost_rent + initCostOppo_rent + totalMoney_rent + totalMoneyOppo_rent - depositBack_rent;
+			$("#rent-totalcost").text("$" + thousandComma(Math.round(totalCost_rent)) );
+
+			if(totalCost > totalCost_rent){
+				$("#rent-buy-compare-text").text("買房比租房多花");
+				$("#rent-buy-compare-num").html("$" + thousandComma(Math.round(totalCost - totalCost_rent)));
+				$("#rent-buy-compare-img img").attr("src", "img/rent_better.png");
+				$("#buy-check-img img").attr("src", "img/uncheck.png");
+				$("#rent-check-img img").attr("src", "img/check.png");
+			}
+
+			else{
+				$("#rent-buy-compare-text").text("租房比買房多花");
+				$("#rent-buy-compare-num").html("$" + thousandComma(Math.round(totalCost_rent - totalCost)));
+				$("#rent-buy-compare-img img").attr("src", "img/buy_better.png");
+				$("#buy-check-img img").attr("src", "img/check.png");
+				$("#rent-check-img img").attr("src", "img/uncheck.png");
+			}
+
+			$("#rent-buy-result-container").css("display", "table");
+
+			budgetObjectInit();
+
+			updateInputValuesBudget();
+
+				var loanMonthRate = budget_object['loanrate']/12;
+
+				if(budget_object['loanrate'] == 0)
+					var loan = budget_object['budgetpermonth'] * budget_object['loantime']*12;
+				else
+					var loan = budget_object['budgetpermonth'] * (1 - Math.pow(1 + loanMonthRate, budget_object['loantime']*(-12))) / loanMonthRate;
+
+				var house_price = loan / budget_object['loanlimit'];
+
+				var firstPay = house_price * (1 - budget_object['loanlimit']);
+
+				var pricePerSquare = house_price / budget_object['square'];
+
+				// console.log(pricePerSquare);
+
+				var distsArr = [];
+
+				for (var i in city_dict[city_chose_budget]){
+					var temp = {};
+					temp['dist'] = i;
+					temp['pricepsquare'] = parseFloat(city_dict[city_chose_budget][i]);
+					distsArr.push(temp);
+				}
+
+
+				distsArr.sort(function(a, b){
+					return b.pricepsquare - a.pricepsquare;
+				});
+
+				// console.log(distsArr);
+
+				distsStr = "";
+
+				count = 0;
+
+				for (var i in distsArr){
+					if(distsArr[i]['pricepsquare'] < pricePerSquare){
+						if(count != 0)
+							distsStr += "、";
+						distsStr += distsArr[i]['dist'];
+						count++;
+					}
+				}
+
+				// console.log(distsStr);
+
+				if(distsStr.length == 0)
+					distsStr = "沒有符合的地區";
+
+				$("#budget-result").html("採本息平均攤還法<br>推算可購買的房屋總價為<span class = 'budget-big-font'>" + thousandComma(Math.round(house_price)) + "元</span><br>可貸款金額為<span class = 'budget-big-font'>" + thousandComma(Math.round(loan)) + "元</span><br>須準備自備款<span class = 'budget-big-font'>" + thousandComma(Math.round(firstPay)) + "元</span><br>若想住" + budget_object['square'] + "坪的房屋，估算每坪單價約<span class = 'budget-big-font'>" + thousandComma(Math.round(pricePerSquare)) + "元</span><br><br>" + city_chose_budget + "每坪單價在" + thousandComma(Math.round(pricePerSquare)) + "元以下的地區：<br>" + distsStr );
+
+				$("#budget-result-container").css("display", "table");
 }
