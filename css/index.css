@@ -1,8 +1,8 @@
 html,body{
 	/*padding-top: 100px;*/
-	max-width: 100%;
-	overflow-x: hidden;
-	padding-bottom: 100px;
+	/*max-width: 100%;*/
+	/*overflow-x: hidden;*/
+	padding-bottom: 50px;
 }
 
 label{
@@ -29,6 +29,7 @@ label{
 	padding-left: 30px;
 	border-left: 2px solid #808080;
 	font-family: 微軟正黑體;
+	margin-bottom: 30px;
 }
 
 .question-mark{
@@ -52,7 +53,7 @@ label{
 .sec-container{
 	width: 80%;
 	display: table;
-	margin: 80px auto;
+	margin: 50px auto;
 }
 
 
@@ -163,7 +164,7 @@ label{
 }
 
 #cal-btn-rent-buy{
-	width: 252px;
+	width: 280px;
 	height: 65px;
 	font-weight: bold;
 	font-family: 微軟正黑體;
@@ -229,16 +230,20 @@ label{
 	border-right: 1px solid #999999;
 }
 
-#rent-buy-compare-text{
+.rent-buy-compare-text{
 	display: table;
 	margin: auto;
 	font-size: 20px;
 }
 
-#rent-buy-compare-num{
+.rent-buy-compare-num{
 	display: table;
 	margin: auto;
 	font-size: 40px;
+}
+
+#rent-buy-compare-text-permonth{
+	margin-top: 20px;
 }
 
 #rent-buy-compare-img{
@@ -298,7 +303,7 @@ label{
 }
 
 #cal-btn-budget{
-	width: 252px;
+	width: 280px;
 	height: 65px;
 	font-weight: bold;
 	font-family: 微軟正黑體;
@@ -344,4 +349,47 @@ label{
 	font-family: 微軟正黑體;
 	font-size: 17px;
 	color: #808080;
+}
+
+.editor-logo-container{
+	width: 80%;
+	margin: 50px auto 30px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid black;
+	display: table;
+}
+
+.editor-src-bot{
+	float: left;
+	font-size: 17px;
+	line-height: 30px;
+}
+
+.logo-container{
+	float: right;
+}
+
+.logos{
+	/*width: 150px;*/
+	display: table;
+}
+
+#newmedia-logo{
+	width: 150px;
+	margin-right: 10px;
+}
+
+#udn-logo{
+	width: 150px;
+	margin-top: 5px;
+}
+
+.like-btn{
+	width: 80%;
+	margin: auto;
+}
+
+.comments{
+	width: 80%;
+	margin: 40px auto;
 }

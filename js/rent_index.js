@@ -22,7 +22,7 @@ var taiperDistsList = ["中正區", "大同區", "中山區", "松山區", "大�
 
 if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
  // some code..
- // window.location.href = "http://p.udn.com.tw/upf/newmedia/2015_data/20150729_tv_data/udn_tv_data_m/index.html";
+ window.location.href = "http://p.udn.com.tw/upf/newmedia/2015_data/20150903_udnrentorbuy/udnrentorbuy_m/index.html";
 }
 
 $(document).ready(function(){
@@ -30,6 +30,10 @@ $(document).ready(function(){
 	$("#first-cover").css("height", $(window).height());
 	$("#first-cover img").css("height", $(window).height());
 	
+	if($("#first-cover img").width() > $(window).width()){
+		var dif = $("#first-cover img").width() - $(window).width();
+		$("#first-cover img").css("margin-left", -(dif/2));
+	}
 
 	// console.log(rent_object);
 
@@ -207,6 +211,24 @@ $(document).ready(function(){
 			}
 		});
 
+		$("#buy-time").blur(function(){
+			if(!isNaN(parseInt($("#buy-time").val().replace(/[,]+/g,"")))){
+				$("#rent-time").val(parseInt($("#buy-time").val().replace(/[,]+/g,"")));
+			}
+			else{
+				$("#buy-time").val(parseInt($("#rent-time").val().replace(/[,]+/g,"")));
+			}
+		});
+
+		$("#rent-time").blur(function(){
+			if(!isNaN(parseInt($("#rent-time").val().replace(/[,]+/g,"")))){
+				$("#buy-time").val(parseInt($("#rent-time").val().replace(/[,]+/g,"")));
+			}
+			else{
+				$("#rent-time").val(parseInt($("#buy-time").val().replace(/[,]+/g,"")));
+			}
+		});
+
 		$(".dropdown-dist-buy li").click(function(){
 			// console.log("hi");
 			var dist_clicked = $(this).find("a").text();
@@ -322,16 +344,20 @@ $(document).ready(function(){
 			$("#rent-totalcost").text("$" + thousandComma(Math.round(totalCost_rent)) );
 
 			if(totalCost > totalCost_rent){
-				$("#rent-buy-compare-text").text("買房比租房多花");
-				$("#rent-buy-compare-num").html("$" + thousandComma(Math.round(totalCost - totalCost_rent)));
+				$("#rent-buy-compare-text-total").text(buy_object["time"] + "年買房比租房多花");
+				$("#rent-buy-compare-num-total").html("$" + thousandComma(Math.round(totalCost - totalCost_rent)));
+				$("#rent-buy-compare-text-permonth").text("每個月買房比租房多花");
+				$("#rent-buy-compare-num-permonth").html("$" + thousandComma(Math.round((totalCost - totalCost_rent)/(buy_object['time']*12))));
 				$("#rent-buy-compare-img img").attr("src", "img/rent_better.png");
 				$("#buy-check-img img").attr("src", "img/uncheck.png");
 				$("#rent-check-img img").attr("src", "img/check.png");
 			}
 
 			else{
-				$("#rent-buy-compare-text").text("租房比買房多花");
-				$("#rent-buy-compare-num").html("$" + thousandComma(Math.round(totalCost_rent - totalCost)));
+				$("#rent-buy-compare-text-total").text(buy_object["time"] + "年租房比買房多花");
+				$("#rent-buy-compare-num-total").html("$" + thousandComma(Math.round(totalCost_rent - totalCost)));
+				$("#rent-buy-compare-text-permonth").text("每個月租房比買房多花");
+				$("#rent-buy-compare-num-permonth").html("$" + thousandComma(Math.round((totalCost_rent - totalCost)/(buy_object['time']*12))));
 				$("#rent-buy-compare-img img").attr("src", "img/buy_better.png");
 				$("#buy-check-img img").attr("src", "img/check.png");
 				$("#rent-check-img img").attr("src", "img/uncheck.png");
@@ -946,16 +972,20 @@ function initCal (){
 			$("#rent-totalcost").text("$" + thousandComma(Math.round(totalCost_rent)) );
 
 			if(totalCost > totalCost_rent){
-				$("#rent-buy-compare-text").text("買房比租房多花");
-				$("#rent-buy-compare-num").html("$" + thousandComma(Math.round(totalCost - totalCost_rent)));
+				$("#rent-buy-compare-text-total").text(buy_object["time"] + "年買房比租房多花");
+				$("#rent-buy-compare-num-total").html("$" + thousandComma(Math.round(totalCost - totalCost_rent)));
+				$("#rent-buy-compare-text-permonth").text("每個月買房比租房多花");
+				$("#rent-buy-compare-num-permonth").html("$" + thousandComma(Math.round((totalCost - totalCost_rent)/(buy_object['time']*12))));
 				$("#rent-buy-compare-img img").attr("src", "img/rent_better.png");
 				$("#buy-check-img img").attr("src", "img/uncheck.png");
 				$("#rent-check-img img").attr("src", "img/check.png");
 			}
 
 			else{
-				$("#rent-buy-compare-text").text("租房比買房多花");
-				$("#rent-buy-compare-num").html("$" + thousandComma(Math.round(totalCost_rent - totalCost)));
+				$("#rent-buy-compare-text-total").text(buy_object["time"] + "年租房比買房多花");
+				$("#rent-buy-compare-num-total").html("$" + thousandComma(Math.round(totalCost_rent - totalCost)));
+				$("#rent-buy-compare-text-permonth").text("每個月租房比買房多花");
+				$("#rent-buy-compare-num-permonth").html("$" + thousandComma(Math.round((totalCost_rent - totalCost)/(buy_object['time']*12))));
 				$("#rent-buy-compare-img img").attr("src", "img/buy_better.png");
 				$("#buy-check-img img").attr("src", "img/check.png");
 				$("#rent-check-img img").attr("src", "img/uncheck.png");

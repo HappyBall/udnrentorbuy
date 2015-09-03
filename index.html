@@ -4,7 +4,7 @@
 	<link rel="shortcut icon" href="img/udn_title_icon.jpg">
 	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <title>電視為什麼這麼難看？ 數據告訴你真相</title> -->
+	<title>買房好還是租房好？ 數字算給你看</title>
 	
 	<!-- for Facebook -->
 	<!-- <meta property="og:title" content="電視為什麼這麼難看？ 數據告訴你真相"/> 
@@ -61,14 +61,23 @@
   	<script type="text/javascript" src="js/bootstrap.js"></script>
   	<script type="text/javascript" src="js/d3.js"></script>
   	<script type="text/javascript" src="js/d3tip.js"></script>
-  	<script type="text/javascript" src="js/rent_index.js"></script>
+  	<script type="text/javascript" src="js/rent_index.js?v1"></script>
   	<script type="text/javascript" src="js/highcharts.js"></script>
   	
   	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-  	<link rel="stylesheet" type="text/css" href="css/index.css">
+  	<link rel="stylesheet" type="text/css" href="css/index.css?v1">
 </head>
 
 <body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.4&appId=926265494102828";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+	
 	<div class = "container-fluid" id = "first-cover">
 		<img src="img/first_cover.gif">
 	</div>
@@ -82,11 +91,12 @@
 				精打細算之後，若你想買房，你的薪水可買在哪些地區？<br>
 				這些關於「住」的難題，本專題透過試算為你解答！
 			</div>
+			<div class="fb-like" data-href="http://p.udn.com.tw/upf/newmedia/2015_data/20150903_udnrentorbuy/udnrentorbuy/index.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 		</div>
 
 		<div class = "sec-container">
 			<div class = "sec-mid-title myfont mid-title font-bold">買房VS.租房 支出比一比</div>
-			<div class = "sec-content myfont content-text">台北市房價高不可攀，現在的年輕人想在台北買房，已是遙不可及的夢想，大多選擇當租屋族，不被沉重的房貸綁架。但是在市區租屋成本也不低，長期下來真的划算嗎？數學專欄作家賴以威推算公式，利用案例分析，比較買房和租房支出。</div>
+			<div class = "sec-content myfont content-text">台北市房價高不可攀，現在的年輕人想在台北買房，已是遙不可及的夢想，大多選擇當租屋族，不被沉重的房貸綁架。但是在市區租屋成本也不低，長期下來真的划算嗎？數學專欄作家<a href="https://www.facebook.com/iweilai0924" target="_blank">賴以威</a>推算公式，利用案例分析，比較買房和租房支出。</div>
 			<div class = "sec-sm-title myfont sm-title font-bold">萬華區買房和租房，20年後哪個划算？</div>
 			<div class = "sec-content myfont content-text">35歲的大仁與小君結婚3年，因為工作關係，在台北市萬華區租屋，30坪房屋每月租金約30000元。長輩勸他們不如買房比較划算，兩人努力存錢，加上長輩資助，手上約有400萬元的自備款，以實價登錄萬華區目前每坪房價約42.46萬元估算，30坪房屋總價約1273.8萬元。若同樣以居住20年計算，究竟買房和租房哪種選擇比較划算？</div>
 		</div>
@@ -158,7 +168,7 @@
 					</div>
 
 					<div class="form-group">
-					    <label for="buy-loanrate" class="col-sm-3 control-label">房貸利率
+					    <label for="buy-loanrate" class="col-sm-3 control-label">貸款利率
 					    	<img src="img/question_mark.png" class = "question-mark" id = "question-loanrate">
 					    </label>
 					    <div class="col-sm-6">
@@ -320,15 +330,17 @@
 
 				<div class="form-group">
 				    <div class="col-sm-12" id = "cal-btn-rent-buy-block">
-				      <button class="btn btn-default calculate-btn" id = "cal-btn-rent-buy">重新計算</button>
+				      <button class="btn btn-default calculate-btn" id = "cal-btn-rent-buy">重新輸入數值試算</button>
 				    </div>
 				</div>
 			</form>
 
 			<div class = "container-fluid col-sm-10 col-sm-offset-1" id = "rent-buy-result-container">
 
-				<div class = "myfont font-bold" id = "rent-buy-compare-text">買房比租房多花</div>
-				<div class = "myfont font-bold" id = "rent-buy-compare-num">$97388</div>
+				<div class = "myfont font-bold rent-buy-compare-text" id = "rent-buy-compare-text-total">買房比租房多花</div>
+				<div class = "myfont font-bold rent-buy-compare-num" id = "rent-buy-compare-num-total">$97388</div>
+				<div class = "myfont font-bold rent-buy-compare-text" id = "rent-buy-compare-text-permonth">買房比租房多花</div>
+				<div class = "myfont font-bold rent-buy-compare-num" id = "rent-buy-compare-num-permonth">$97388</div>
 				<div id = "rent-buy-compare-img"><img src="img/rent_better.png"></div>
 				<div class = "calculate-results col-sm-12">
 					<div class = "result-container fl-left" id = "buy-result">
@@ -453,8 +465,27 @@
 		</div>
 
 		<div class = "sec-container">
-			<div id = "equal-rent-chart"></div>
+			<div class = "sec-sm-title myfont sm-title">居住成本的比較</div>
+			<div class = "sec-content myfont content-text">
+				許多人在討論租房還是買房划算時，僅單純比較「租金」和「月繳貸款」，不過這樣的比較有失公允，因為買房最終會有一間房子，但租屋沒有。因此我們採用另一個指標－居住成本，意思是住在這間房子N年下來，總共得付多少錢。<br><br>
+				租屋的居住成本比較簡單，包括房租和相關開銷，以及若將房租和相關開銷拿去投資，對應會失去的預期投資獲利（也就是機會成本）。買屋的居住成本比較複雜，包括了頭期款、貸款、仲介費、這些費用對應的機會成本。乍看之下這些開銷很大，絕對不是房租能比擬的。<br><br>
+				然而，買屋的開銷最後會換來一間房子。因此要把開銷的總和扣掉N年後房子的市值，才能得到買屋的居住成本。
+			</div>
+			<div class = "sec-sm-title myfont sm-title">關鍵在未來房市</div>
+			<div class = "sec-content myfont content-text">
+				實際試算後可發現，買屋跟租屋的抉擇關鍵在於未來房市。以大安區20坪、居住20年的例子來看，當固定所有數字，只調整房屋增值率時，可以得到以下這張圖：
+			</div>
+			<div class = "sec-content myfont content-text">
+				這張圖表示，當房市很好，住了20年後賣掉的中古屋，價錢可能比當初買進時還要高。這差價不僅比總貸款的利息高，甚至可能賺錢。以4%來說，房價約是漲2.2倍，買下這棟房子，相當於帶來每個月8.7萬元的收入。<br><br>
+				但相對來說，要是房市走壞，只要下跌超過-1%，平均每個月就得付出6萬多元的代價。這是因為20年後的房價約只有當初入手的8成，總開銷除了貸款利息外，還得算入虧損的20%房價。若跌幅高達4%，20年下來跌至原來房價4到5成，這時每個月住房的代價高達10萬。租屋只要3.6萬元。<br><br>
+				事實上，在不考慮機會成本的情況下，買屋與租屋的抉擇即是「租金支出」與「貸款利息支出和房屋折舊」的比大小。倘若後者較高，就是租屋划算；反之則是買屋划算。台灣近幾年的房屋不僅不折舊，還坐地起價，導致「利息支出和房屋折舊」的總和可能還是負的（住了幾年房子轉手賣出還賺錢）。但當房市不再看好，高房價的高貸款利息，加上房市不景氣時折舊的負擔。純粹以數字來看，租屋就是相對合理的選擇。
+
+			</div>
 		</div>
+
+		<!-- <div class = "sec-container">
+			<div id = "equal-rent-chart"></div>
+		</div> -->
 
 		<div class = "sec-container">
 			<div class = "sec-mid-title myfont mid-title font-bold">你的薪水可以在哪裡買房？</div>
@@ -533,7 +564,7 @@
 
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-10">
-					      <button class="btn btn-default calculate-btn" id = "cal-btn-budget">重新計算</button>
+					      <button class="btn btn-default calculate-btn" id = "cal-btn-budget">重新輸入數值試算</button>
 					    </div>
 					  </div>
 
@@ -593,6 +624,35 @@
 				信義房屋企研室經理曾敬德也表示，要看民眾心態，若是有自住需求，現在時機點比過去一年好，因不景氣建商好議價，民眾相對好買好挑。若有看到合適物件、且價格比之前划算，便可考慮進場。
 
 			</div>
+		</div>
+
+		<div class = "editor-logo-container">
+			<div class = "editor-src-bot myfont">
+				聯合報系新媒體部／楊棋宇、蔡佩蓉&nbsp;&nbsp;&nbsp;聯合報／許瑋琳&nbsp;&nbsp;製作<br>
+				試算公式分析提供／長庚大學電子工程系助理教授<a href="https://www.facebook.com/iweilai0924" target="_blank">賴以威</a>
+			</div>
+
+			<div class = "logo-container">
+				<div class = "logos fl-left">
+					<a href="https://www.facebook.com/udnNewMediaLab?fref=ts" target="_blank">
+						<img id = "newmedia-logo" src="img/nmlogo.png">
+					</a>
+				</div>
+				<div class = "logos fl-left">
+					<a href="http://theme.udn.com/theme/cate/6772" target="_blank">
+						<img id = "udn-logo" src="img/udnlogo.png">
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+		<div class = "like-btn">
+			<div class="fb-like" data-href="http://p.udn.com.tw/upf/newmedia/2015_data/20150903_udnrentorbuy/udnrentorbuy/index.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
+		</div>
+		<div class = "comments">
+			<div class="fb-comments" data-width="100%" data-href="http://p.udn.com.tw/upf/newmedia/2015_data/20150903_udnrentorbuy/udnrentorbuy/index.html" data-numposts="5"></div>
 		</div>
 		
 	</div>
