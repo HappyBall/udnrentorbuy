@@ -261,6 +261,11 @@ label{
 	display: table;
 }
 
+#avg-diff-img{
+	display: table;
+	margin-top: 20px;
+}
+
 #budget-container{
 	border-top: 1px solid #999999;
 	background-color: rgba(0,171,199,0.15);

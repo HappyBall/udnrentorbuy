@@ -7,21 +7,30 @@
 	<title>買房好還是租房好？ 數字算給你看</title>
 	
 	<!-- for Facebook -->
-	<!-- <meta property="og:title" content="電視為什麼這麼難看？ 數據告訴你真相"/> 
+	<meta property="og:title" content="買房好還是租房好？ 數字算給你看"/> 
 	<meta property="og:type" content="website"/>
-	<meta property="og:url" content="http://p.udn.com.tw/upf/newmedia/2015_data/20150729_tv_data/udn_tv_data/index.html"/>
-	<meta property="og:image" content="http://p.udn.com.tw/upf/newmedia/2015_data/20150729_tv_data/udn_tv_data/img/FB.jpg"/>
+	<meta property="og:url" content="http://p.udn.com.tw/upf/newmedia/2015_data/20150903_udnrentorbuy/udnrentorbuy/index.html"/>
+	<meta property="og:image" content="http://p.udn.com.tw/upf/newmedia/2015_data/20150903_udnrentorbuy/udnrentorbuy/img/FB.jpg"/>
 	<meta property="og:site_name" content="聯合報系新媒體部"/> 
-	<meta property="og:description" content="電視轉來轉去，沒一台好看的！」這樣的抱怨每天出現在你我的生活中，為什麼電視節目這麼難看？你每個月繳的500元有線電視費花到哪去了？數據和動畫為你一一拆解。"/> -->
+	<meta property="og:description" content="「買房好還是租房好？」是許多人一生中都會面臨到的問題。近來房價看跌，現階段究竟是進場買房好，還是先租屋觀望？精打細算之後，若你想買房，你的薪水可買在哪些地區？這些關於「住」的難題，本專題透過試算為你解答！"/>
 	
 	<!-- for Google -->
-	<!-- <meta name="description" content="電視轉來轉去，沒一台好看的！」這樣的抱怨每天出現在你我的生活中，為什麼電視節目這麼難看？你每個月繳的500元有線電視費花到哪去了？數據和動畫為你一一拆解。" />
+	<meta name="description" content="「買房好還是租房好？」是許多人一生中都會面臨到的問題。近來房價看跌，現階段究竟是進場買房好，還是先租屋觀望？精打細算之後，若你想買房，你的薪水可買在哪些地區？這些關於「住」的難題，本專題透過試算為你解答！" />
 	<meta name="author" content="聯合報系新媒體部" />
 	<meta name="copyright" content="聯合報系新媒體部" />
-	<meta name="application-name" content="電視為什麼這麼難看？ 數據告訴你真相" /> -->
+	<meta name="application-name" content="買房好還是租房好？ 數字算給你看" />
 	
 	<!-- our google analytics -->
-	
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-58825218-37', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
 
 	<!-- udn google analytics -->
 	<script>
@@ -61,11 +70,11 @@
   	<script type="text/javascript" src="js/bootstrap.js"></script>
   	<script type="text/javascript" src="js/d3.js"></script>
   	<script type="text/javascript" src="js/d3tip.js"></script>
-  	<script type="text/javascript" src="js/rent_index.js?v1"></script>
+  	<script type="text/javascript" src="js/rent_index.js?v2"></script>
   	<script type="text/javascript" src="js/highcharts.js"></script>
   	
   	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-  	<link rel="stylesheet" type="text/css" href="css/index.css?v1">
+  	<link rel="stylesheet" type="text/css" href="css/index.css?v2">
 </head>
 
 <body>
@@ -474,6 +483,9 @@
 			<div class = "sec-sm-title myfont sm-title">關鍵在未來房市</div>
 			<div class = "sec-content myfont content-text">
 				實際試算後可發現，買屋跟租屋的抉擇關鍵在於未來房市。以大安區20坪、居住20年的例子來看，當固定所有數字，只調整房屋增值率時，可以得到以下這張圖：
+			</div>
+			<div id = "avg-diff-img">
+				<img src="img/avg-diff.png">
 			</div>
 			<div class = "sec-content myfont content-text">
 				這張圖表示，當房市很好，住了20年後賣掉的中古屋，價錢可能比當初買進時還要高。這差價不僅比總貸款的利息高，甚至可能賺錢。以4%來說，房價約是漲2.2倍，買下這棟房子，相當於帶來每個月8.7萬元的收入。<br><br>

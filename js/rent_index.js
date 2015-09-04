@@ -77,8 +77,16 @@ $(document).ready(function(){
 					$(this).css("opacity", 1);
 
 					tip_selected_buy = $(this).attr("id");
+
 				}
 			}
+
+			ga("send", {
+				"hitType": "event",
+		        "eventCategory": "question-mark",
+		        "eventAction": "hover",
+		        "eventLabel": key
+		    });
 		
 		});
 
@@ -118,6 +126,13 @@ $(document).ready(function(){
 				$("#dropdownMenu-budget").html(city_clicked + "<span><img src='img/popdown.png'></span>");
 
 				city_chose_budget = city_clicked;
+
+				ga("send", {
+				    "hitType": "event",
+			        "eventCategory": "budget-city",
+			        "eventAction": "click",
+			        "eventLabel": city_clicked
+			    });
 			}
 
 			// console.log(city_chose_budget);
@@ -195,8 +210,22 @@ $(document).ready(function(){
 						}
 
 						dist_chose_buy = dist_clicked;
+
+						ga("send", {
+					        "hitType": "event",
+					        "eventCategory": "buy-dist",
+					        "eventAction": "click",
+					        "eventLabel": dist_clicked
+					    });
 					}
 				});
+
+				ga("send", {
+			        "hitType": "event",
+			        "eventCategory": "buy-city",
+			        "eventAction": "click",
+			        "eventLabel": city_clicked
+			    });
 
 				
 			}
@@ -229,6 +258,17 @@ $(document).ready(function(){
 			}
 		});
 
+		$("input").focus(function(){
+			// console.log($(this).attr("id"));
+
+			ga("send", {
+		        "hitType": "event",
+		        "eventCategory": "input",
+		        "eventAction": "focus",
+		        "eventLabel": $(this).attr("id")
+		    });
+		});
+
 		$(".dropdown-dist-buy li").click(function(){
 			// console.log("hi");
 			var dist_clicked = $(this).find("a").text();
@@ -244,6 +284,13 @@ $(document).ready(function(){
 				}
 
 				dist_chose_buy = dist_clicked;
+
+				ga("send", {
+				    "hitType": "event",
+			        "eventCategory": "buy-dist",
+			        "eventAction": "click",
+			        "eventLabel": dist_clicked
+			    });
 			}
 		});
 
@@ -364,6 +411,13 @@ $(document).ready(function(){
 			}
 
 			$("#rent-buy-result-container").css("display", "table");
+
+			ga("send", {
+			    "hitType": "event",
+		        "eventCategory": "cal-btn",
+		        "eventAction": "click",
+		        "eventLabel": "rentorbuy-calculated"
+		    });
 
 			return false;	
 		});
@@ -543,6 +597,13 @@ $(document).ready(function(){
 				$("#budget-result").html("採本息平均攤還法<br>推算可購買的房屋總價為<span class = 'budget-big-font'>" + thousandComma(Math.round(house_price)) + "元</span><br>可貸款金額為<span class = 'budget-big-font'>" + thousandComma(Math.round(loan)) + "元</span><br>須準備自備款<span class = 'budget-big-font'>" + thousandComma(Math.round(firstPay)) + "元</span><br>若想住" + budget_object['square'] + "坪的房屋，估算每坪單價約<span class = 'budget-big-font'>" + thousandComma(Math.round(pricePerSquare)) + "元</span><br><br>" + city_chose_budget + "每坪單價在" + thousandComma(Math.round(pricePerSquare)) + "元以下的地區：<br>" + distsStr );
 
 				$("#budget-result-container").css("display", "table");
+
+				ga("send", {
+				    "hitType": "event",
+			        "eventCategory": "cal-btn",
+			        "eventAction": "click",
+			        "eventLabel": "budget-calculated"
+			    });
 			}
 
 
@@ -593,7 +654,7 @@ $(document).ready(function(){
 				trading_point_arr.push(temp);
 			}
 
-			console.log(trading_point_arr);
+			// console.log(trading_point_arr);
 
 			$(".nav-option").click(function(){
 				var click_num = parseInt($(this).attr("id").split("-")[2]);
@@ -611,9 +672,18 @@ $(document).ready(function(){
 					chart.series[0].setData(trading_point_arr[click_num]['trading']);
 					chart.series[1].setData(trading_point_arr[click_num]['point']);
 
-					console.log(chart.series);
+					// console.log(chart.series);
 
 					nav_selected = click_num;
+
+					// console.log($(this).text());
+
+					ga("send", {
+					    "hitType": "event",
+				        "eventCategory": "chart-navigations",
+				        "eventAction": "click",
+				        "eventLabel": $(this).text()
+				    });
 				}
 			});
 
