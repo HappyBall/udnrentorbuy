@@ -2,7 +2,7 @@ var city_dict = {};
 // var city_chose_rent = "";
 var city_chose_budget = "";
 var city_chose_buy = "台北市";
-var dist_chose_buy = "萬華區";
+var dist_chose_buy = "大安區";
 var rent_object = {};
 var buy_object = {};
 var budget_object = {};
@@ -37,7 +37,7 @@ $(document).ready(function(){
 
 	// console.log(rent_object);
 
-	d3.csv("data/tips.csv", function(data_tips){
+	d3.csv("data/tips_v2.csv", function(data_tips){
 		for (var i in data_tips){
 			var temp = {};
 			temp['title'] = data_tips[i]['title'];
@@ -877,7 +877,7 @@ function updateInputValuesBudget(){
 
 function initAllValues(){
 	city_chose_buy = "台北市";
-	dist_chose_buy = "萬華區";
+	dist_chose_buy = "大安區";
 
 	$("#dropdownMenu-city-buy").html(city_chose_buy + "<span><img src='img/popdown.png'></span>");
 
@@ -885,7 +885,7 @@ function initAllValues(){
 		d3.select(".dropdown-dist-buy").append("li").append("a").text(Object.keys(city_dict[city_chose_buy])[j]);
 	}
 
-	$("#dropdownMenu-dist-buy").html("萬華區 <span><img src='img/popdown.png'></span>");
+	$("#dropdownMenu-dist-buy").html("大安區 <span><img src='img/popdown.png'></span>");
 
 	$("#rent-money").val(thousandComma(30000));
 	$("#rent-time").val("20");
@@ -893,15 +893,16 @@ function initAllValues(){
 	$("#rent-inflat").val("1");
 	$("#rent-agentfee").val("50");
 
-	$("#buy-square").val("30");
+	$("#buy-square").val("20");
 	$("#buy-time").val("20");
-	$("#buy-money").val(thousandComma(Math.round(parseFloat(city_dict[city_chose_buy]['萬華區']) * 30)));
-	$("#buy-loanlimit").val("70");
+	$("#buy-money").val(thousandComma(Math.round(parseFloat(city_dict[city_chose_buy]['大安區']) * 20)));
+	$("#buy-loanlimit").val("80");
 	$("#buy-loantime").val("20");
 	$("#buy-loanrate").val("2");
 	$("#buy-houseinflat").val("0");
 	$("#buy-buyfee").val("2");
 	$("#buy-sellfee").val("4");
+	$("#buy-housetax").val(thousandComma(8700));
 
 	$("#invest-return").val("1");
 
