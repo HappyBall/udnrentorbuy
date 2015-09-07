@@ -20,7 +20,7 @@ var taiperDistsList = ["中正區", "大同區", "中山區", "松山區", "大�
 
 //---------------------------------------------------------------------------
 
-if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+if( /Android|webOS|iPad|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
  // some code..
  window.location.href = "http://p.udn.com.tw/upf/newmedia/2015_data/20150903_udnrentorbuy/udnrentorbuy_m/index.html";
 }
@@ -37,7 +37,7 @@ $(document).ready(function(){
 
 	// console.log(rent_object);
 
-	d3.csv("data/tips_v2.csv", function(data_tips){
+	d3.csv("data/tips_v3.csv", function(data_tips){
 		for (var i in data_tips){
 			var temp = {};
 			temp['title'] = data_tips[i]['title'];
@@ -93,7 +93,7 @@ $(document).ready(function(){
 
 	});
 
-	d3.csv("data/city_dist_avgmoney_real.csv", function(data_avgmoney){
+	d3.csv("data/city_dist_avgmoney_real_v3.csv", function(data_avgmoney){
 		// console.log(data_avgmoney);
 		for (var i in data_avgmoney){
 			// console.log(data_avgmoney[i]);
@@ -184,41 +184,54 @@ $(document).ready(function(){
 				while (myNode.firstChild) {
 				    myNode.removeChild(myNode.firstChild);
 				}
+				
+				if(city_clicked == "新竹市" || city_clicked == "嘉義市"){
+					$("#dropdownMenu-dist-buy").html("無分區 <span><img src='img/popdown.png'></span>");
+					if(!isNaN(parseFloat($("#buy-square").val()))){
+						var squs = parseFloat($("#buy-square").val());
 
-				// console.log($("#dropdownMenu-city-buy").text());
-				for (var j in Object.keys(city_dict[city_clicked])){
-					d3.select(".dropdown-dist-buy").append("li").append("a").text(Object.keys(city_dict[city_clicked])[j]);
-				}
-
-				$("#dropdownMenu-dist-buy").html("地區 <span><img src='img/popdown.png'></span>");
-				$("#buy-money").val("");
-
-				city_chose_buy = city_clicked;
-
-				$(".dropdown-dist-buy li").click(function(){
-					// console.log("hi");
-					var dist_clicked = $(this).find("a").text();
-					// console.log(dist_clicked);
-
-					if(dist_clicked != dist_chose_buy){
-						$("#dropdownMenu-dist-buy").html(dist_clicked + "<span><img src='img/popdown.png'></span>");
-						// console.log(parseInt($("#buy-square").val()));
-						if(!isNaN(parseFloat($("#buy-square").val()))){
-							var squs = parseFloat($("#buy-square").val());
-
-							$("#buy-money").val(thousandComma(Math.round(squs * parseFloat(city_dict[city_chose_buy][dist_clicked]))));
-						}
-
-						dist_chose_buy = dist_clicked;
-
-						ga("send", {
-					        "hitType": "event",
-					        "eventCategory": "buy-dist",
-					        "eventAction": "click",
-					        "eventLabel": dist_clicked
-					    });
+						$("#buy-money").val(thousandComma(Math.round(squs * parseFloat(city_dict[city_clicked]["無分區"]))));
 					}
-				});
+					city_chose_buy = city_clicked;
+					dist_chose_buy = "無分區";
+				}
+				
+				else{
+					// console.log($("#dropdownMenu-city-buy").text());
+					for (var j in Object.keys(city_dict[city_clicked])){
+						d3.select(".dropdown-dist-buy").append("li").append("a").text(Object.keys(city_dict[city_clicked])[j]);
+					}
+
+					$("#dropdownMenu-dist-buy").html("地區 <span><img src='img/popdown.png'></span>");
+					$("#buy-money").val("");
+
+					city_chose_buy = city_clicked;
+
+					$(".dropdown-dist-buy li").click(function(){
+						// console.log("hi");
+						var dist_clicked = $(this).find("a").text();
+						// console.log(dist_clicked);
+
+						if(dist_clicked != dist_chose_buy){
+							$("#dropdownMenu-dist-buy").html(dist_clicked + "<span><img src='img/popdown.png'></span>");
+							// console.log(parseInt($("#buy-square").val()));
+							if(!isNaN(parseFloat($("#buy-square").val()))){
+								var squs = parseFloat($("#buy-square").val());
+
+								$("#buy-money").val(thousandComma(Math.round(squs * parseFloat(city_dict[city_chose_buy][dist_clicked]))));
+							}
+
+							dist_chose_buy = dist_clicked;
+
+							ga("send", {
+								"hitType": "event",
+								"eventCategory": "buy-dist",
+								"eventAction": "click",
+								"eventLabel": dist_clicked
+							});
+						}
+					});
+				}
 
 				ga("send", {
 			        "hitType": "event",
@@ -593,6 +606,12 @@ $(document).ready(function(){
 
 				if(distsStr.length == 0)
 					distsStr = "沒有符合的地區";
+				else{
+					if(city_chose_budget == "新竹市")
+						distsStr = "新竹市全市（不分區）"
+					else if(city_chose_budget == "嘉義市")
+						distsStr = "嘉義市全市（不分區）"
+				}
 
 				$("#budget-result").html("採本息平均攤還法<br>推算可購買的房屋總價為<span class = 'budget-big-font'>" + thousandComma(Math.round(house_price)) + "元</span><br>可貸款金額為<span class = 'budget-big-font'>" + thousandComma(Math.round(loan)) + "元</span><br>須準備自備款<span class = 'budget-big-font'>" + thousandComma(Math.round(firstPay)) + "元</span><br>若想住" + budget_object['square'] + "坪的房屋，估算每坪單價約<span class = 'budget-big-font'>" + thousandComma(Math.round(pricePerSquare)) + "元</span><br><br>" + city_chose_budget + "每坪單價在" + thousandComma(Math.round(pricePerSquare)) + "元以下的地區：<br>" + distsStr );
 
@@ -898,13 +917,13 @@ function initAllValues(){
 	$("#buy-money").val(thousandComma(Math.round(parseFloat(city_dict[city_chose_buy]['大安區']) * 20)));
 	$("#buy-loanlimit").val("80");
 	$("#buy-loantime").val("20");
-	$("#buy-loanrate").val("2");
-	$("#buy-houseinflat").val("0");
+	$("#buy-loanrate").val("2.5");
+	$("#buy-houseinflat").val("-1");
 	$("#buy-buyfee").val("2");
 	$("#buy-sellfee").val("4");
 	$("#buy-housetax").val(thousandComma(8700));
 
-	$("#invest-return").val("1");
+	$("#invest-return").val("1.5");
 
 	city_chose_budget = "新北市";
 	$("#budget-budgetpermonth").val(thousandComma(30000));

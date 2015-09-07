@@ -5,7 +5,7 @@ loanrate,貸款利率,一般約2%上下，實際資料可參考 <a href="http://
 buyfee,買屋手續費,根據內政部規定，房仲業者收取的仲介服務費上限不得超過不動產實際成交價金的6%，現在房仲業者大都以「賣方4%、買方1%~2%」來收取。
 sellfee,賣屋手續費,根據內政部規定，房仲業者收取的仲介服務費上限不得超過不動產實際成交價金的6%，現在房仲業者大都以「賣方4%、買方1%~2%」來收取。
 housetax,房屋稅,房屋稅=房屋課稅現值*稅率。房屋課稅現值=核定單價*面積*(1-折舊率*折舊經歷年數)*地段調整率*分層分攤率。稅率則依使用類別課徵，住家用為1.2%、營業用為3%、非自住非營業用為2%。此例以台北市大安區敦化南路10年12層電梯大樓為例，估算房屋稅約8700元。
-houseinflat,房屋增值率,房屋增值率=房價年增率*房屋折舊率。<a href="https://docs.google.com/spreadsheets/d/1zQVX-qr4Jp9VxQVs8TidJ63XubGp6wYdxyFzscma_G8/edit?usp=sharing" target ="_blank">房價年增率</a>以實價登錄住宅類每坪成交單價計算，各縣市比率不同，資料由永慶房屋整理提供。此例以民國104年台北市房價年增率0%帶入計算。折舊率計算可參考<a href = "http://www.land.gov.taipei/ct.asp?xItem=12519&CtNode=56902&mp=111001" target = "_blank">台北市建築改良物耐用年數及每年折舊率表</a>。
+houseinflat,房屋增值率,房屋增值率包括房價年增率和房屋折舊率兩個因子。<a href="https://docs.google.com/spreadsheets/d/1zQVX-qr4Jp9VxQVs8TidJ63XubGp6wYdxyFzscma_G8/edit?usp=sharing" target ="_blank">房價年增率</a>以實價登錄住宅類每坪成交單價計算，各縣市比率不同，資料由永慶房屋整理提供。此例以民國104年台北市房價年增率0%帶入計算。折舊率計算可參考<a href = "http://www.land.gov.taipei/ct.asp?xItem=12519&CtNode=56902&mp=111001" target = "_blank">台北市建築改良物耐用年數及每年折舊率表</a>。
 investreturn,投資報酬率,意指若沒有買房或租房，這筆支出用在其他投資上，可獲得的報酬率。此例假設放在銀行定存，年利率約1%。
 deposit,押金,通常以n個月的租金計算。此例假設為1個月租金。
 agentfee,仲介費,通常以租金的n%計算。此例假設為50%租金。
